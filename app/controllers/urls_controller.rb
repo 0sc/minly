@@ -1,5 +1,7 @@
 class UrlsController < ApplicationController
-  before_action :set_url, only: [:show, :edit, :update, :destroy]
+  include UrlsHelper
+
+  before_action :set_url, only: [:edit, :update, :destroy]
 
   # GET /urls
   # GET /urls.json
@@ -7,14 +9,10 @@ class UrlsController < ApplicationController
     @urls = Url.all
   end
 
-  # GET /urls/1
-  # GET /urls/1.json
-  def show
-  end
-
   # GET /urls/new
   def new
-    @url = Url.new
+    # @url = Url.new
+    set_view_data
   end
 
   # GET /urls/1/edit
@@ -24,16 +22,21 @@ class UrlsController < ApplicationController
   # POST /urls
   # POST /urls.json
   def create
-    @url = Url.new(url_params)
-
     respond_to do |format|
+      @url = Url.find_or_initialize_by(original: sanitize_url(url_params[:original]))
       if @url.save
-        format.html { redirect_to @url, notice: 'Url was successfully created.' }
-        format.json { render :show, status: :created, location: @url }
+        @url.save_shortened(create_shortened_url(@url.id)) if @url.shortened.nil?
       else
-        format.html { render :new }
-        format.json { render json: @url.errors, status: :unprocessable_entity }
+        flash[:error] = "An error occurred with your input."
       end
+        # format.html { redirect_to root_path, notice: 'Url was successfully created.' }
+        # format.json { render :show, status: :created, location: @url }
+      # else
+      #   format.html { redirect_to root_path }
+        set_view_data
+        format.html { render :new }
+      #   # format.json { render json: @url.errors, status: :unprocessable_entity }
+      # end
     end
   end
 
@@ -69,6 +72,11 @@ class UrlsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def url_params
-      params.require(:url).permit(:original, :redirect, :active)
+      params.require(:url).permit(:original)
+    end
+
+    def set_view_data
+      @urls = Url.all
+      @url  = Url.new
     end
 end
