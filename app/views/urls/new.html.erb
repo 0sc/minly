@@ -9,12 +9,19 @@
      <strong>Views: <%= url.views %></strong>
   </p>
 <% end %>
-<h2>Popular Urls</h2>
-<% @popular_urls.each do |url| %>
-  <p id="<%= dom_id(url) %>"><strong>Original: <%= url.original %></strong>&emsp;
-     <strong>Shortened: <%= url.shortened %></strong>&emsp;
-     <strong>Active: <%= url.active %></strong>
-     <strong>Views: <%= url.views %></strong>
-  </p>
+
+<% if @popular_urls %>
+  <div class= 'popular_urls'>
+  <h2>Popular Urls</h2>
+  <ul>
+  <% @popular_urls.each do |url| %>
+    <li id="<%= dom_id(url) %>"><strong>Original: <%= url.original %></strong>&emsp;
+       <strong>Shortened: <%= url.shortened %></strong>&emsp;
+       <strong>Active: <%= url.active %></strong>
+       <strong>Views: <%= url.views %></strong>
+    </li>
+  <% end %>
+  </ul>
+</div>
 <% end %>
 <!-- <%= link_to 'Back', urls_path %> -->
