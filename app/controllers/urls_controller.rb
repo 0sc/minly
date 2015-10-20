@@ -6,12 +6,20 @@ class UrlsController < ApplicationController
   # GET /urls
   # GET /urls.json
   def index
-    @urls = Url.all
+    # @urls = Url.all
+  end
+
+  def reroute
+    @params = reroute_params[:path]
+
+    # redirect_to ("http://andela.com")
+    render :index
+    # render :inactive
+    # render :404
   end
 
   # GET /urls/new
   def new
-    # @url = Url.new
     set_view_data
   end
 
@@ -75,8 +83,13 @@ class UrlsController < ApplicationController
       params.require(:url).permit(:original)
     end
 
+    def reroute_params
+      params.permit(:path)
+    end
+
     def set_view_data
-      @urls = Url.all
+      @urls = Url.limit(20).order(created_at: :desc)
       @url  = Url.new
+      @popular_urls = Url.order(views: :desc).limit(20)
     end
 end

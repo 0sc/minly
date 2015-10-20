@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019123023) do
+ActiveRecord::Schema.define(version: 20151020101021) do
 
   create_table "urls", force: :cascade do |t|
     t.string   "original"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20151019123023) do
     t.boolean  "active",     default: true
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "views",      default: 0
   end
 
 end

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :urls
-
-  root 'urls#new'
+  root  'urls#new'
+  resources :urls, only: [:new, :create]
+  get '/:path', to: "urls#reroute"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
