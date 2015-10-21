@@ -1,13 +1,17 @@
 <h1>New Url</h1>
 <p id="notice"><%= notice %></p>
 <%= render 'form' %>
-<h2>Recent Urls</h2>
-<% @urls.each do |url| %>
-  <p id="<%= dom_id(url) %>"><strong>Original: <%= url.original %></strong>&emsp;
-     <strong>Shortened: <%= url.shortened %></strong>&emsp;
-     <strong>Active: <%= url.active %></strong>
-     <strong>Views: <%= url.views %></strong>
-  </p>
+<% if @urls %>
+  <h2>Recent Urls</h2>
+  <ul>
+  <% @urls.each do |url| %>
+    <li id="<%= dom_id(url) %>"><strong>Original: <%= url.original %></strong>&emsp;
+       <strong>Shortened: <%= host_url + url.shortened %></strong>&emsp;
+       <strong>Active: <%= url.active %></strong>
+       <strong>Views: <%= url.views %></strong>
+    </li>
+  <% end %>
+  </ul>
 <% end %>
 
 <% if @popular_urls %>
@@ -16,7 +20,7 @@
   <ul>
   <% @popular_urls.each do |url| %>
     <li id="<%= dom_id(url) %>"><strong>Original: <%= url.original %></strong>&emsp;
-       <strong>Shortened: <%= url.shortened %></strong>&emsp;
+       <strong>Shortened: <%= host_url + url.shortened %></strong>&emsp;
        <strong>Active: <%= url.active %></strong>
        <strong>Views: <%= url.views %></strong>
     </li>
