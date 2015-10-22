@@ -1,5 +1,6 @@
 class Url < ActiveRecord::Base
-  validates :original, presence: true, uniqueness: true
+  validates_presence_of :original, :message => "Please enter url to be shortened." 
+  validates :original, uniqueness: true
   # validates :original, format: { with: /\w_@\w_.\w*/ }, message: ""
 
   # private
