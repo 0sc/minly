@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   root  'urls#new'
   resources :urls, only: [:new, :create]
   get '/urls', to: "urls#new"
+  get "auth/:provider/callback", to: "sessions#create"
+  get 'auth/failure', to: redirect("/")
+  get 'signout', to: "sessions#destroy", as: "signout"
   get '/:path', to: "urls#reroute"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

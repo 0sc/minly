@@ -19,6 +19,7 @@ class UrlsController < ApplicationController
         if target.active
           target.update_attribute(:views, target.views + 1)
           redirect_to (target.original)
+          return
         end
         status = set_inactive_url_notification(incoming)
       end
