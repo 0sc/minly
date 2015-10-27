@@ -49,10 +49,10 @@ class UrlsController < ApplicationController
 
       @url = current_user ? shorten_url_for_users(original, vanity_string) : shorten_url_for_default(original)
 
-      if @url.new_record?
+      if @url && @url.new_record?
         manage_save
       else
-        flash[:notice] = "Record already exists"
+        flash[:notice] = "Record already exists" if @url
       end
 
         # format.html { redirect_to root_path, notice: 'Url was successfully created.' }
@@ -61,7 +61,7 @@ class UrlsController < ApplicationController
       #   format.html { redirect_to root_path }
 
         if current_user
-          redirect_to users_url
+          redirect_to dashboard_url
           return
         end
 
