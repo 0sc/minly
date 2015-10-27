@@ -1,4 +1,4 @@
-@font-face {
+ @font-face {
   font-family: "QaskinWhite";
   src: url(QaskinWhite_PersonalUse.ttf) format("truetype");
 }
@@ -13,13 +13,24 @@ a:hover {
   text-decoration: underline;
   background-color: inherit;
 }
-.logo a{
+.logo a, .min_logo a {
   margin-top: 1em;
   color: #fff !important;
   text-shadow: 2px 1px 1px black;
   font-family: 'QaskinWhite', cursive;
-  font-size: 10em;
   text-decoration: none;
+}
+.logo a {
+  font-size: 10em;
+}
+.min_header .logo a {
+  font-size: 3em;
+}
+header.min_header{
+  background-color: #009be8;
+}
+header.min_header div{
+  margin: 0;
 }
 header nav {
   text-align: right;

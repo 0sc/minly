@@ -5,13 +5,7 @@
         <%= link_to "Minly", root_path %>
       </div>
     </div>
-    <div class="nine columns">
-      <nav>
-        <ul>
-          <li><%= link_to "Sign in", "/auth/twitter" %></li>
-        </ul>
-      </nav>
-    </div>
+    <%= render "login_logout" %>
   </div>
   <div class="container">
     <div class="eight columns offset-by-two headertext">

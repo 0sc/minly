@@ -10,7 +10,31 @@ module UrlsHelper
 
   def sanitize_url(url)
     return if url.nil? || url.empty?
+    url #add url sanitizer
+  end
+
+  def shorten_url_for_users(original, vanity_string)
+    if vanity_string
+      url = Url.find_or_initialize_by(shortened: vanity_string)
+      url.original ||= original
+    else
+      url = shorten_url_for_default(original)
+    end
+    url.user_id ||= current_user.id
     url
+  end
+
+  def shorten_url_for_default(original)
+    Url.find_or_initialize_by(original: original)
+  end
+
+  def manage_save
+    if @url.save
+      @url.save_shortened(create_shortened_url(@url.id)) if @url.shortened.nil?
+      flash[:success] = "Url was shortened successfully."
+    else
+      flash[:error] = @url.errors[:original].join(", ")
+    end
   end
 
   def show_in_list_format(urls)

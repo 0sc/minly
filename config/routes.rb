@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/urls', to: "urls#new"
   get "auth/:provider/callback", to: "sessions#create"
   get 'auth/failure', to: redirect("/")
+  get '/users', to: "users#index", as: "dashboard"
   get 'signout', to: "sessions#destroy", as: "signout"
   get '/:path', to: "urls#reroute"
   # The priority is based upon order of creation: first created -> highest priority.

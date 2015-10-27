@@ -18,7 +18,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= render @header %>
+  <%= render @header if @header %>
   <main role="main">
     <%= yield %>
   </main>

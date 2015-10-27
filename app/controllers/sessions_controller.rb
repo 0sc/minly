@@ -1,8 +1,15 @@
 class SessionsController < ApplicationController
   def create
     user = User.from_omniauth(env['omniauth.auth'])
-    session[:user_id] = user.id
-    redirect_to root_url, notice: "Signed in successfully"
+
+    if user.id
+      session[:user_id] = user.id
+      flash[:notice] = "Signed in successfully!"
+      redirect_to dashboard_path
+    else
+      flash[:notice] = "An error occured. Please try again."
+      redirect_to root_url
+    end
   end
 
   def destroy

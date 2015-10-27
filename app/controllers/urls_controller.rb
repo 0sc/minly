@@ -24,8 +24,7 @@ class UrlsController < ApplicationController
         status = set_inactive_url_notification(incoming)
       end
       status ||= set_not_found_notification(incoming)
-      @notification = ['Oops! An error occured.']
-      @notification << status
+      flash[:error] = 'Oops! An error occured.' + "<br />" + status
     end
 
     set_view_data
@@ -45,18 +44,27 @@ class UrlsController < ApplicationController
   # POST /urls.json
   def create
     respond_to do |format|
-      @url = Url.find_or_initialize_by(original: sanitize_url(url_params[:original]))
-      if @url.save
-        @url.save_shortened(create_shortened_url(@url.id)) if @url.shortened.nil?
-        flash[:success] = "Url was shortened successfully."
+      original = sanitize_url(url_params[:original])
+      vanity_string   = sanitize_url(url_params[:shortened]) if current_user
+
+      @url = current_user ? shorten_url_for_users(original, vanity_string) : shorten_url_for_default(original)
+
+      if @url.new_record?
+        manage_save
       else
-        @notice = @url.errors[:original]
+        flash[:notice] = "Record already exists"
       end
 
         # format.html { redirect_to root_path, notice: 'Url was successfully created.' }
         # format.json { render :show, status: :created, location: @url }
       # else
       #   format.html { redirect_to root_path }
+
+        if current_user
+          redirect_to users_url
+          return
+        end
+
         set_view_data
 
         format.html { render :new }
@@ -97,7 +105,7 @@ class UrlsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def url_params
-      params.require(:url).permit(:original)
+      params.require(:url).permit(:original, :shortened)
     end
 
     def reroute_params

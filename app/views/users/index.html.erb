@@ -1,0 +1,56 @@
+<header class="min_header">
+  <div class="container">
+    <div class="three columns">
+      <div class="logo">
+        <%= link_to "Minly", root_path %>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<section class="urls_form">
+  <div class="row">
+    <%= form_for(Url.new) do |f| %>
+      <div class="seven columns">
+        <%= f.text_field :original, placeholder: "Original" %>
+      </div>
+      <div class="two columns">
+        <%= f.text_field :shortened, placeholder: "custom string" %>
+      </div>
+      <div class="two columns">
+        <%= f.submit "Shorten Url" %>
+      </div>
+    <% end %>
+    </div>
+    <% if flash %>
+    <div class="row">
+      <div class="four columns offset-by-four">
+        <% flash.each do |klass, value| %>
+        <p class="<%= klass %>"><%= value %></p>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+</section>
+
+<section class="urls">
+    <div class= "row">
+      <div class="four columns offset-by-four">
+        <h1>Url Statistics</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="one-third column">
+        <div class="url-listing">
+          <%= show_in_list_format(current_user.urls.order("id desc")) %>
+        </div>
+      </div>
+
+      <div class="two-third column">
+        <div class="statistics">
+
+        </div>
+      </div>
+    </div>
+</section>
