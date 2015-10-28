@@ -17,8 +17,12 @@ class UrlsController < ApplicationController
       if target
         #Do all the statistics thingy at this point
         if target.active
+          ahoy.track "Visit #{incoming}", url_id: target.id
+          Ahoy::Event.where(name: "Visit #{incoming}").update_all(url_id: target.id)
+          ahoy.track_visit
           target.update_attribute(:views, target.views + 1)
           redirect_to (target.original)
+          # redirect_to(dashboard_url)
           return
         end
         status = set_inactive_url_notification(incoming)
@@ -45,7 +49,7 @@ class UrlsController < ApplicationController
   def create
     respond_to do |format|
       original = sanitize_url(url_params[:original])
-      vanity_string   = sanitize_url(url_params[:shortened]) if current_user
+      vanity_string   = url_params[:shortened] if current_user
 
       @url = current_user ? shorten_url_for_users(original, vanity_string) : shorten_url_for_default(original)
 
@@ -77,13 +81,14 @@ class UrlsController < ApplicationController
   # PATCH/PUT /urls/1.json
   def update
     respond_to do |format|
-      if @url.update(url_params)
-        format.html { redirect_to @url, notice: 'Url was successfully updated.' }
-        format.json { render :show, status: :ok, location: @url }
+      if @url.update(edit_params)
+        flash[:success] = 'Url was successfully updated.'
+        # format.json { render :show, status: :ok, location: @url }
       else
-        format.html { render :edit }
-        format.json { render json: @url.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @url.errors, status: :unprocessable_entity }
       end
+      format.html { redirect_to dashboard_url }
     end
   end
 
@@ -106,6 +111,10 @@ class UrlsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def url_params
       params.require(:url).permit(:original, :shortened)
+    end
+
+    def edit_params
+      params.require(:url).permit(:original, :active)
     end
 
     def reroute_params

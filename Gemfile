@@ -20,6 +20,9 @@ gem "omniauth-twitter"
 gem 'jquery-rails'
 gem 'valid_url'
 gem 'puma'
+gem 'ahoy_matey'
+gem 'activeuuid', '>= 0.5.0'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

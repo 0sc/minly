@@ -90,6 +90,10 @@ header nav ul li a.btn{
   color:#9d9d9d;
   font-size:1.1em;
 }
+header > .container {
+  max-width: 100%;
+  width: 100%;
+}
 /* recent-popular-section */
 .recent-popular-section {
   background:#009be8;
