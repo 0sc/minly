@@ -17,9 +17,11 @@ module RequestsHelper
     request_status([User.find_by_token(token).as_json], "User token does not exist.")
   end
 
-  def user_urls(user_id)
-    return request_status(nil,"Invalid login parameters. Your request require a valid user token.") unless user_id
-    request_status([User.find(user_id).urls.order("id desc")])
+  def user_urls(user_token)
+    return request_status(nil,"Invalid login parameters. Your request require a valid user token.") unless user_token
+    user = User.find_by_token(user_token)
+    return request_status(user,"Invalid login parameters. The provided token could not be authenticated.") unless user
+    request_status([user.urls.order("id desc")])
   end
 
   def url_statistics(url)
@@ -27,15 +29,15 @@ module RequestsHelper
     request_status([])
   end
 
-  def set_url_active(url, user_id)
-    return request_status(nil, "Invalid request parameters; url and/or user_token") unless url && user_id
+  def set_url_active(url, user_token)
+    return request_status(nil, "Invalid request parameters; url and/or user_token") unless url && user_token
   end
 
   def delete_url
   end
 
   def set_url_origin(url, user_id)
-    return request_status(nil, "Invalid request parameters; url and/or user_token") unless url && user_id
+    return request_status(nil, "Invalid request parameters; url and/or user_token") unless url && user_token
   end
 
   def set_status(status, info)

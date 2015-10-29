@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
       # user.profile_url = auth.info.image
       user.name  = auth.info.name
       user.oauth_token = auth.credentials.token
+      user.token = SecureRandom.urlsafe_base64(32)
       user.save!
     end
   end

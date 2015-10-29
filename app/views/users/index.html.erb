@@ -32,20 +32,29 @@
         <h2>Url Statistics</h2>
       </div>
     </div>
-    <div class="row">
-      <div class="two-thirds column">
-        <div class="url-listing">
-          <%= show_in_list_format(@urls) %>
+    <% if @url %>
+      <div class="row">
+        <div class="two-thirds column">
+          <div class="url-listing">
+            <%= show_in_list_format(@urls) %>
+          </div>
         </div>
-      </div>
 
-      <div class="one-third column">
-        <div class="statistics">
-          <%= get_statistics(@urls.last) %>
-        </div>
-        <div class="edit_form">
-          <%= render "edit_form" %>
+        <div class="one-third column">
+          <div class="statistics">
+            <%= get_statistics(@urls.last) %>
+          </div>
+          <div class="edit_form">
+            <%= render "edit_form" %>
+          </div>
         </div>
       </div>
-    </div>
+      <% else %>
+        <div class="row">
+          <div class="four columns offset-by-three">
+          <%=  User.first.token %>
+            <p>All your shortened url will be presented here. When you shorten a url the analytics will be presented here.</p>
+          </div>
+        </div>
+    <% end %>
 </section>
