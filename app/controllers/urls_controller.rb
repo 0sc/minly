@@ -122,9 +122,9 @@ class UrlsController < ApplicationController
     end
 
     def set_view_data
-      @urls = Url.limit(20).order(created_at: :desc)
+      @urls = Url.recent
       @url  = Url.new
-      @popular_urls = Url.order(views: :desc).limit(20)
+      @popular_urls = Url.popular
       @header = "main_header"
     end
 end

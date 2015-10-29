@@ -11,4 +11,12 @@ class Url < ActiveRecord::Base
   def save_shortened (shortened_url)
     update(shortened: shortened_url)
   end
+
+  def self.popular(num = 20)
+    order(views: :desc).limit(num)
+  end
+
+  def self.recent(num = 20)
+    limit(num).order(created_at: :desc)
+  end
 end

@@ -22,6 +22,8 @@ gem 'valid_url'
 gem 'puma'
 gem 'ahoy_matey'
 gem 'activeuuid', '>= 0.5.0'
+gem 'rails-api', require: 'rails-api/action_controller/api'
+gem 'responders'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
