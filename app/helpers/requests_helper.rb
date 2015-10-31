@@ -1,6 +1,7 @@
 module RequestsHelper
+  include UrlsHelper
   def expand_url(shortened)
-    return request_status(nil, "Invalid url provided") unless shortened
+    return [invalid_url_error] unless shortened
     request_status([Url.find_by_shortened(shortened).as_json])
   end
 
@@ -12,32 +13,65 @@ module RequestsHelper
     request_status(Url.recent)
   end
 
-  def verify_user(token)
-    return request_status(nil, "Invalid user token") unless token
-    request_status([User.find_by_token(token).as_json], "User token does not exist.")
+  def try_token_login(token)
+    User.find_by_token(token)
   end
 
   def user_urls(user_token)
-    return request_status(nil,"Invalid login parameters. Your request require a valid user token.") unless user_token
-    user = User.find_by_token(user_token)
-    return request_status(user,"Invalid login parameters. The provided token could not be authenticated.") unless user
-    request_status([user.urls.order("id desc")])
+    return [not_user_error] unless user_token
+
+    user = get_user_object(user_token)
+    return [not_user_error] unless user
+
+    request_status(user.urls.order("id desc"))
   end
 
   def url_statistics(url)
-    return request_status(nil,"error no url provided") unless url
+    return [invalid_url_error] unless url
     request_status([])
   end
 
-  def set_url_active(url, user_token)
-    return request_status(nil, "Invalid request parameters; url and/or user_token") unless url && user_token
+  def set_url_status(url, user_token, status)
+    return [invalid_url_error] unless url
+    return [not_user_error] unless get_user_object(user_token, url)
+
+    url = Url.find_by_shortened(url)
+    return [error_status("Shortened url not found")] unless url
+    url.active = status
+    url.save
+    request_status([url.as_json], "Request could not be processed successfully.")
   end
 
-  def delete_url
+  def set_url_origin(url, user_token,origin)
+    # return [invalid_url_error] unless url
+    # return [not_user_error] unless get_user_object(user_token, url)
+    #
+    # url = Url.find_by_shortened(url)
+    # return [error_status("Shortened url not found")] unless url
+    #
+    # url.origin = "http://"+origin if !origin.match(/\A(http|https):\/\//)
+    # url.save
+    # request_status([url.as_json], "Request could not be processed successfully.")
+    [error_status("This feature is current unavailable")]
   end
 
-  def set_url_origin(url, user_id)
-    return request_status(nil, "Invalid request parameters; url and/or user_token") unless url && user_token
+  def delete_url(url, user_token)
+    return [invalid_url_error] unless url
+    return [not_user_error] unless get_user_object(user_token, url)
+
+    url = Url.find_by_shortened(url)
+    return [error_status("Shortened url not found")] unless url
+    request_status([url.destroy])
+  end
+
+  def process_action_callback(url, status, message, return_path = dashboard_url)
+    flash[status] = message if status
+    respond_to do |format|
+      format.html { redirect_to return_path}
+      # stat = flash.first
+      # format.json { render json: {:status => stat.first, :status_info => stat.last, payload: url} }
+      format.json { render json: {:status => status, :status_info => flash[status], payload: url} }
+    end
   end
 
   def set_status(status, info)
@@ -56,7 +90,7 @@ module RequestsHelper
   end
 
   def request_status(result, error_info="", success_info="")
-    if result
+    if result && !result.first.nil?
       stat = success_info.empty? ? success_status : success_status(success_info)
     else
       stat = error_info.empty? ? error_status : error_status(error_info)
@@ -64,5 +98,21 @@ module RequestsHelper
     end
     result << stat
   end
+
+  def not_user_error
+    error_status("You don't have permission to make authorize the action.")
+  end
+
+  def invalid_url_error
+    error_status("Invalid url provided.")
+  end
+
+  def get_user_object(token, url=nil)
+    user = User.find_by_token(token)
+    user = user.urls.where(shortened: "url") if url
+    user
+  end
+
+
 
 end

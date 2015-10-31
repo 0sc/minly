@@ -5,6 +5,7 @@ class Url < ActiveRecord::Base
 
   validates_presence_of :original, :message => "Please enter url to be shortened."
   validates :original, url: true
+  validates :shortened, allow_nil: true, format: { with: /[A-Za-z0-9]/, message: "Your custom string should be only alphanumeric characters."}
   # validates :original, format: { with: /\w_@\w_.\w*/ }, message: ""
 
   # private
