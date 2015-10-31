@@ -93,8 +93,6 @@ class UrlsController < ApplicationController
 
     def set_view_data
       @urls = Url.recent
-      @url  = Url.new
       @popular_urls = Url.popular
-      @header = "main_header"
     end
 end

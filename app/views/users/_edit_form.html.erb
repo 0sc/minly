@@ -1,10 +1,12 @@
-<h4> Edit </h4>
+<h4> Manage Url </h4>
 <%= form_for(@urls.last) do |f| %>
   <%= label_tag(:original, "Edit target url") %>
-  <%= f.text_field :original %>
+  <%= f.text_field :original, class: "u-full-width" %>
+  <label>
   <%= f.check_box :active %>
-  <%= label_tag(:active, "Active") %>
-  <%= f.submit "save" %>
-  <%= link_to 'delete', @urls.last, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <span class="label-body">Active</span>
+  </label>
+  <%= f.submit "save", `:remote => true, :class=>class: "button button-primary" %>
+  <%= link_to 'delete', @urls.last, class: "button", method: :delete, data: { confirm: 'Are you sure?'} %>
 
 <% end %>

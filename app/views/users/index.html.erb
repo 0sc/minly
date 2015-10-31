@@ -1,60 +1,28 @@
-<header class="min_header">
-  <div class="container">
-    <div class="three columns">
-      <div class="logo">
-        <%= link_to "Minly", root_path %>
-      </div>
-    </div>
-    <%= render "urls/login_logout" %>
-  </div>
-</header>
-
-<section class="urls_form">
-  <div class="row">
-    <%= form_for(Url.new) do |f| %>
-      <div class="seven columns">
-        <%= f.text_field :original, placeholder: "Original" %>
-      </div>
-      <div class="two columns">
-        <%= f.text_field :shortened, placeholder: "custom string" %>
-      </div>
-      <div class="two columns">
-        <%= f.submit "Shorten Url" %>
-      </div>
-    <% end %>
-    </div>
-    <%= display_notification flash %>
-</section>
-
-<section class="urls">
-    <div class= "row">
-      <div class="four columns offset-by-four">
-        <h2>Url Statistics</h2>
-      </div>
-    </div>
-    <% if @url %>
-      <div class="row">
-        <div class="two-thirds column">
-          <div class="url-listing">
-            <%= show_in_list_format(@urls) %>
-          </div>
+<section class="container add-top">
+    <h2>Url Analytics</h2>
+    <% if @urls.size > 0 %>
+    <div class= "row add-top">
+      <div class="four columns responsive">
+        <div class="url-listing">
+          <h4>My Urls</h4>
+          <%= list_user_urls(@urls) %>
         </div>
+      </div>
 
-        <div class="one-third column">
-          <div class="statistics">
-            <%= get_statistics(@urls.last) %>
-          </div>
+      <div class="seven columns offset-by-one right">
+        <div class="statistics">
+          <h4>Details</h4>
+          <%= get_statistics(@urls.last) %>
           <div class="edit_form">
             <%= render "edit_form" %>
           </div>
         </div>
       </div>
       <% else %>
-        <div class="row">
-          <div class="four columns offset-by-three">
-          <%=  User.first.token %>
-            <p>All your shortened url will be presented here. When you shorten a url the analytics will be presented here.</p>
-          </div>
-        </div>
+      <div class="twelve columns">
+        <%=  User.first.token %>
+          <p>All your shortened urls and indept analytics of usage will be shown. Try it out; shorten a url.</p>
+      </div>
     <% end %>
+  </div>
 </section>

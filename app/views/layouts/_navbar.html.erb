@@ -1,0 +1,10 @@
+<nav class="u-pull-right navbar">
+  <ul class="navbar-list">
+    <% if current_user %>
+      <li class="navbar-item"><%= link_to("Sign out", signout_url, class: "button") %></li>
+      <li class="navbar-item"><%= link_to("Dashboard", dashboard_url, class: "button") %></li>
+    <% else %>
+    <li class="navbar-item"><%= link_to("Sign in", "/auth/twitter", class: "button") %></li>
+    <% end %>
+  </ul>
+</nav>

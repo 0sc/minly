@@ -1,0 +1,16 @@
+<%= form_for(Url.new) do |f| %>
+  <% fieldwidth = current_user ? %w{six three} :  %w{eight four} %>
+  <div class="row">
+    <div class="<%= fieldwidth.first %> columns">
+      <%= f.text_field :original, placeholder: 'original', class: "u-full-width" %>
+    </div>
+    <% if current_user %>
+      <div class="three columns">
+        <%= f.text_field :shortened, placeholder: "custom string", class: "u-full-width" %>
+      </div>
+    <% end %>
+    <div class="<%= fieldwidth.last %> columns">
+      <%= f.submit "Shorten Url", class: "u-full-width button-primary" %>
+    </div>
+  </div>
+<% end %>

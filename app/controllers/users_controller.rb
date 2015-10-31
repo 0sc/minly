@@ -5,7 +5,6 @@ class UsersController < ApplicationController
     @urls = current_user.urls.order("id desc")
   end
 
-
   private
 
   def check_login

@@ -62,16 +62,14 @@ module UrlsHelper
     list = ''
     urls.each do |url|
       target = host_url + url.shortened
-      list += "<li id='#{dom_id(url)}'><strong>Shortened: #{link_to(target, target)}</strong>&emsp;<strong>Views: #{url.views}</strong></li>"
+      list += "<li id='#{dom_id(url)}'>#{link_to(target, target)}</li>"
     end
-    "<section><ul>#{list}</ul></section>".html_safe
+    "<ul>#{list}</ul>".html_safe
   end
 
   def display_notification(notification)
     return unless notification
     notice = <<-EOS
-    <div class="container">
-      <div class="eight columns offset-by-two">
         <div class="notification">
           <ul>
       EOS
@@ -81,8 +79,6 @@ module UrlsHelper
     notice += <<-EOS
           </ul>
         </div>
-      </div>
-    </div>
     EOS
     notice.html_safe
   end
