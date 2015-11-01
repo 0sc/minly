@@ -15,4 +15,9 @@ class User < ActiveRecord::Base
   def get_recent_urls
     urls.order("id desc")
   end
+
+  def self.get_user(arg, col=:id)
+    find_by(col => arg)
+  end
+
 end

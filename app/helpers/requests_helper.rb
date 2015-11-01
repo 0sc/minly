@@ -13,10 +13,6 @@ module RequestsHelper
     request_status(Url.recent)
   end
 
-  def try_token_login(token)
-    User.find_by_token(token)
-  end
-
   def user_urls(user_token)
     return [not_user_error] unless user_token
 

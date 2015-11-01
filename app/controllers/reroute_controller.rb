@@ -2,28 +2,22 @@ class UrlsController < ApplicationController
   include RerouteHelper
 
   def index
-    incoming = reroute_params[:path]
-    if !incoming.empty?
-      target = Url.find_by_shortened(incoming)
+    target = reroute_params[:path]
+    #ARM breaks if null query
+    target = Url.get_url(target, :shortened) unless target.empty?
 
-      if target
-        #Do all the statistics thingy at this point
-        if target.active
-          ahoy.track "Visit #{incoming}", url_id: target.id
-          Ahoy::Event.where(name: "Visit #{incoming}").update_all(url_id: target.id)
-          ahoy.track_visit
-          target.note_this_visit
-          redirect_to (target.original)
-          return
-        end
-        status = set_inactive_url_notification(incoming)
-      end
-      status ||= set_not_found_notification(incoming)
-      flash[:error] = 'Oops! An error occured.' + "<br />" + status
+    if target && !target.empty?
+      manage_redirection(target)
+    else
+      #Maybe show error message!??
+      redirect_to root_path
     end
+  end
 
-    set_view_data
-    render "new"
+  private
+
+  def reroute_params
+    params.permit(:path)
   end
 
 end

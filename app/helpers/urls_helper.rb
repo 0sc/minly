@@ -20,19 +20,9 @@ module UrlsHelper
     end
   end
 
-  def host_url
-    request.base_url + "/"
-  end
-
-  def sanitize_url(url)
-    return if url.nil? || url.empty?
-    url = "http://"+url if !url.match(/\A(http|https):\/\//) #add url sanitizer
-    url
-  end
-
   def shorten_url_for_users(original, vanity_string)
     if vanity_string
-      url = Url.find_or_initialize_by(shortened: vanity_string)
+      url = Url.init_with(shortened: vanity_string)
       url.original ||= original
     else
       url = shorten_url_for_default(original)
@@ -42,7 +32,13 @@ module UrlsHelper
   end
 
   def shorten_url_for_default(original)
-    Url.find_or_initialize_by(original: original)
+    Url.init_with(original: original)
+  end
+
+  def sanitize_url(url)
+    return if url.nil? || url.empty?
+    url = "http://"+url if !url.match(/\A(http|https):\/\//) #add url sanitizer
+    url
   end
 
   def manage_save(url)
@@ -85,7 +81,4 @@ module UrlsHelper
     "We can't find any record relating to #{url}. Please cross-check your entry and try again. "
   end
 
-  def set_inactive_url_notification(url)
-    "The url #{url} has been deactivated. You can try again later."
-  end
 end

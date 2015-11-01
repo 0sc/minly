@@ -16,7 +16,7 @@ class UrlsController < ApplicationController
   end
 
   def show
-    @url = Url.find(params[:id])
+    @url = Url.get_url(params[:id])
     if @url
       process_action_callback(@url, :success, "Url was retrieved successfully.")
     else
@@ -27,7 +27,8 @@ class UrlsController < ApplicationController
   # POST /urls
   # POST /urls.json
   def create
-    @url = process_url(url_params[:original], url_params[:shortened])
+    params = url_params
+    @url = process_url(params[:original], params[:shortened])
     return_path = current_user ?
     dashboard_url : root_path
     process_action_callback(@url, "", "", return_path)
@@ -57,8 +58,8 @@ class UrlsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_url
-      @url = Url.find_by(:id => params[:id])
-      @url ||= Url.find_by_shortened(params[:id])
+      @url = Url.get_url(params[:id])
+      @url ||= Url.get_url(params[:id], :shortened)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -68,10 +69,6 @@ class UrlsController < ApplicationController
 
     def update_params
       params.require(:url).permit(:original, :active)
-    end
-
-    def reroute_params
-      params.permit(:path)
     end
 
     def set_view_data

@@ -18,8 +18,7 @@ gem "omniauth-twitter"
 gem 'jquery-rails'
 gem 'valid_url'
 gem 'puma'
-gem 'ahoy_matey'
-gem 'activeuuid', '>= 0.5.0'
+gem 'fnordmetric'
 gem 'rails-api', require: 'rails-api/action_controller/api'
 gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
 
