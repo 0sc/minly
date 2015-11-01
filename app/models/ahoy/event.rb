@@ -6,5 +6,10 @@ module Ahoy
     belongs_to :url
 
     serialize :properties, JSON
+
+    def track_this_visit
+
+    end
+    
   end
 end

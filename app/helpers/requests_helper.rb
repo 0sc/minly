@@ -68,8 +68,6 @@ module RequestsHelper
     flash[status] = message if status
     respond_to do |format|
       format.html { redirect_to return_path}
-      # stat = flash.first
-      # format.json { render json: {:status => stat.first, :status_info => stat.last, payload: url} }
       format.json { render json: {:status => status, :status_info => flash[status], payload: url} }
       format.js {render :layout => false}
     end

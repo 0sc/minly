@@ -1,22 +1,23 @@
 module UrlsHelper
-  def create_shortened_url (url_id)
-      # host_url + "/" + url_id.to_s(32).reverse
-      url_id.to_s(32).reverse
-  end
-
-  def process_url(original, shortened)
+  def process_url(original, vanity_string)
     original = sanitize_url(original)
-    vanity_string = shortened if current_user
 
-    url = current_user ? shorten_url_for_users(original, vanity_string) : shorten_url_for_default(original)
+    url = shorten_url(original, vanity_string)
 
     if url && url.new_record?
-      p "here"
       url = manage_save(url)
     else
       flash[:notice] = "Record already exists" if url
     end
     url
+  end
+
+  def shorten_url(original, vanity_string)
+    if current_user
+      return shorten_url_for_users(original, vanity_string)
+    else
+      return shorten_url_for_default(original)
+    end
   end
 
   def host_url
@@ -31,10 +32,6 @@ module UrlsHelper
 
   def shorten_url_for_users(original, vanity_string)
     if vanity_string
-      # if vanity_string.match(/[^A-Za-z0-9]/)
-      #   flash[:error] = "Error. Your custom string should be only alphanumeric characters."
-      #   return nil
-      # end
       url = Url.find_or_initialize_by(shortened: vanity_string)
       url.original ||= original
     else
@@ -58,6 +55,10 @@ module UrlsHelper
     url
   end
 
+  def create_shortened_url (url_id)
+      url_id.to_s(32).reverse
+  end
+
   def format_error_msg(url)
     url.errors.full_messages.join(". ").gsub("Original", "Url input").gsub("Shortened", "Custom string")
   end
@@ -73,16 +74,11 @@ module UrlsHelper
 
   def display_notification(notification)
     return unless notification
-    notice = <<-EOS
-          <ul>
-      EOS
-        notification.each do |class_tag, message|
-          notice += "<li class='#{class_tag}'>#{message}</li>" unless class_tag.empty?
-        end
-    notice += <<-EOS
-          </ul>
-    EOS
-    notice.html_safe
+    notice = ""
+    notification.each do |class_tag, message|
+      notice += "<li class='#{class_tag}'>#{message}</li>" unless class_tag.empty?
+    end
+    "<ul>#{notice}</ul>".html_safe
   end
 
   def set_not_found_notification(url)
