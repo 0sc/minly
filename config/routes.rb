@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root  'urls#new'
-  resources :urls, only: [:new, :create]
+  resources :urls, only: [:new, :create, :update, :destroy]
   get '/urls', to: "urls#new"
   get "auth/:provider/callback", to: "sessions#create"
   get 'auth/failure', to: redirect("/")

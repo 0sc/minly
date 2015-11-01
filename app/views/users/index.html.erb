@@ -5,7 +5,7 @@
         <%= link_to "Minly", root_path %>
       </div>
     </div>
-
+    <%= render "urls/login_logout" %>
   </div>
 </header>
 
@@ -23,33 +23,28 @@
       </div>
     <% end %>
     </div>
-    <% if flash %>
-    <div class="row">
-      <div class="four columns offset-by-four">
-        <% flash.each do |klass, value| %>
-        <p class="<%= klass %>"><%= value %></p>
-        <% end %>
-      </div>
-    </div>
-    <% end %>
+    <%= display_notification flash %>
 </section>
 
 <section class="urls">
     <div class= "row">
       <div class="four columns offset-by-four">
-        <h1>Url Statistics</h1>
+        <h2>Url Statistics</h2>
       </div>
     </div>
     <div class="row">
-      <div class="one-third column">
+      <div class="two-thirds column">
         <div class="url-listing">
-          <%= show_in_list_format(current_user.urls.order("id desc")) %>
+          <%= show_in_list_format(@urls) %>
         </div>
       </div>
 
-      <div class="two-third column">
+      <div class="one-third column">
         <div class="statistics">
-
+          <%= get_statistics(@urls.last) %>
+        </div>
+        <div class="edit_form">
+          <%= render "edit_form" %>
         </div>
       </div>
     </div>

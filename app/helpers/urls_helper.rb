@@ -10,11 +10,16 @@ module UrlsHelper
 
   def sanitize_url(url)
     return if url.nil? || url.empty?
-    url #add url sanitizer
+    url = "http://"+url if !url.match(/\A(http|https):\/\//) #add url sanitizer
+    url
   end
 
   def shorten_url_for_users(original, vanity_string)
     if vanity_string
+      if vanity_string.match(/[^A-Za-z0-9]/)
+        flash[:error] = "Error. Your custom string should be only alphanumeric characters."
+        return nil
+      end
       url = Url.find_or_initialize_by(shortened: vanity_string)
       url.original ||= original
     else
@@ -46,16 +51,16 @@ module UrlsHelper
     "<section><ul>#{list}</ul></section>".html_safe
   end
 
-  def display_notification(messages, class_tag)
-    return unless messages
+  def display_notification(notification)
+    return unless notification
     notice = <<-EOS
     <div class="container">
       <div class="eight columns offset-by-two">
         <div class="notification">
-          <ul #{class_tag}>
+          <ul>
       EOS
-        messages.each do |message|
-          notice += "<li>#{message}</li>"
+        notification.each do |class_tag, message|
+          notice += "<li class='#{class_tag}'>#{message}</li>"
         end
     notice += <<-EOS
           </ul>
