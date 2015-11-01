@@ -11,9 +11,16 @@ class UrlsController < ApplicationController
 
   def reroute
     @params = reroute_params[:path]
+    @status = "Not found"
+    target = Url.find_by(shortened: @params)
+    if target
+      #Do all the statistics thingy at this point
+      redirect_to (target.original) if target.active
+      @status = "Inactive"
+    end
 
     # redirect_to ("http://andela.com")
-    render :index
+    # render :index
     # render :inactive
     # render :404
   end
