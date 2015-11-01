@@ -1,7 +1,7 @@
 class UrlsController < ApplicationController
   include RequestsHelper
 
-  before_action :authenticate_user, :only => [:update, :destroy]
+  before_action :authenticate_user, :only => [:update, :destroy, :show]
   before_action :set_url, only: [:update, :destroy]
 
   # GET /urls
@@ -41,6 +41,15 @@ class UrlsController < ApplicationController
     set_view_data
   end
 
+  def show
+    @url = Url.find(params[:id])
+    if @url
+      process_action_callback(@url, :success, "Url was retrieved successfully.")
+    else
+      process_action_callback(@url, :error, "Invalid params provided. Request could not be completed.")
+    end
+  end
+
   # POST /urls
   # POST /urls.json
   def create
@@ -54,9 +63,9 @@ class UrlsController < ApplicationController
   # PATCH/PUT /urls/1.json
   def update
     if @url.update(update_params)
-      process_action_callback(:success, @url, "Url was updated successfully.")
+      process_action_callback(@url, :success, "Url was updated successfully.")
     else
-      process_action_callback(:error, @url, "Invalid params provided. Request could not be completed.")
+      process_action_callback(@url, :error, "Invalid params provided. Request could not be completed.")
     end
   end
 

@@ -71,6 +71,7 @@ module RequestsHelper
       # stat = flash.first
       # format.json { render json: {:status => stat.first, :status_info => stat.last, payload: url} }
       format.json { render json: {:status => status, :status_info => flash[status], payload: url} }
+      format.js {render :layout => false}
     end
   end
 
@@ -112,7 +113,5 @@ module RequestsHelper
     user = user.urls.where(shortened: "url") if url
     user
   end
-
-
 
 end

@@ -1,4 +1,4 @@
-<%= form_for(Url.new) do |f| %>
+<%= form_for(Url.new, remote: true) do |f| %>
   <% fieldwidth = current_user ? %w{six three} :  %w{eight four} %>
   <div class="row">
     <div class="<%= fieldwidth.first %> columns">

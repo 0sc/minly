@@ -5,16 +5,15 @@
       <div class="four columns responsive">
         <div class="url-listing">
           <h4>My Urls</h4>
-          <%= list_user_urls(@urls) %>
+          <div><%= list_user_urls(@urls) %></div>
         </div>
+        <div id="trigger"><%= link_to "", "#",remote:true %></div>
       </div>
-
       <div class="seven columns offset-by-one right">
         <div class="statistics">
           <h4>Details</h4>
-          <%= get_statistics(@urls.last) %>
-          <div class="edit_form">
-            <%= render "edit_form" %>
+          <div class='edit_form' id='edit_form'>
+            <%= show_url_details(@urls.first) %>
           </div>
         </div>
       </div>

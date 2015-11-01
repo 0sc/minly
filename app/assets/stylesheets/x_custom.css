@@ -67,8 +67,33 @@ font-size:1em;
 .url-listing, .statistics{
   text-align: left;
 }
+.url-listing h4, .statistics h4 {
+  text-align: center;
+}
+.url-listing p.active, .url-listing p:hover, .statistics{
+  background-color: #f1f1f1;
+  -moz-box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.url-listing p{
+  background-color: #fff;
+  box-shadow: none;
+  margin-bottom:0.4em;
+  cursor: pointer;
+  -webkit-margin-before: 0px;
+  -webkit-margin-after: 0px;
+  padding: 0.8rem;
+}
+
 .statistics strong{
   padding-right: 3em;
+}
+#edit_form{
+  padding-left: 1em;
+}
+.trigger{
+  display: none;
 }
 /*a:hover {
   text-decoration: underline;

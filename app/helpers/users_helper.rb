@@ -13,18 +13,25 @@ module UsersHelper
       <strong>Views</strong> #{url.views}
       </p>
     EOS
-    data.html_safe
   end
 
   def get_status (is_active)
     is_active ?  "Active" : "Inactive"
   end
 
-  def list_user_urls (urls)
+  def show_url_details (url)
+    result = get_statistics(url)
+    @target_url = url
+    result += render "urls/edit_form"
+    result.html_safe
+  end
+
+  def list_user_urls (urls = current_user.urls.order("id desc"))
     list = ''
     urls.each do |url|
       target = host_url + url.shortened
-      list += "<p id='#{dom_id(url)}'>#{link_to(target, target)}</p>"
+      # list += "<p id='#{dom_id(url)}'>#{link_to(target, target, remote: true)}</p>"
+      list += "<p id='#{dom_id(url)}'>#{target}</p>"
     end
     "#{list}".html_safe
   end

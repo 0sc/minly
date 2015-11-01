@@ -3,9 +3,9 @@ class Url < ActiveRecord::Base
   has_many :ahoy_events, class_name: "Ahoy::Event"
   has_many :visits, through: :ahoy_events
 
-  validates_presence_of :original, :message => "Please enter url to be shortened."
+  validates_presence_of :original, :message => "is not provided"
   validates :original, url: true
-  validates :shortened, allow_nil: true, format: { with: /[A-Za-z0-9]/, message: "Your custom string should be only alphanumeric characters."}
+  validates :shortened, allow_nil: true, format: { with: /[A-Za-z0-9]/, message: "should be only alphanumeric characters."}
   # validates :original, format: { with: /\w_@\w_.\w*/ }, message: ""
 
   # private

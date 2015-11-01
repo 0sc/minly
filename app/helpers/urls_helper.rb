@@ -53,9 +53,13 @@ module UrlsHelper
       url.save_shortened(create_shortened_url(url.id)) if url.shortened.nil?
       flash[:success] = "Url was shortened successfully."
     else
-      flash[:error] = url.errors[:original].join(", ")
+      flash[:error] = format_error_msg(url)
     end
     url
+  end
+
+  def format_error_msg(url)
+    url.errors.full_messages.join(". ").gsub("Original", "Url input").gsub("Shortened", "Custom string")
   end
 
   def show_in_list_format(urls)
@@ -70,15 +74,13 @@ module UrlsHelper
   def display_notification(notification)
     return unless notification
     notice = <<-EOS
-        <div class="notification">
           <ul>
       EOS
         notification.each do |class_tag, message|
-          notice += "<li class='#{class_tag}'>#{message}</li>"
+          notice += "<li class='#{class_tag}'>#{message}</li>" unless class_tag.empty?
         end
     notice += <<-EOS
           </ul>
-        </div>
     EOS
     notice.html_safe
   end
