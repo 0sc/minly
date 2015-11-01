@@ -1,0 +1,7 @@
+<div class="nine columns">
+  <nav>
+    <ul>
+      <li><%= current_user ? link_to("Sign out", "", class: "btn") :  link_to("Sign in", "/auth/twitter", class: "btn") %></li>
+    </ul>
+  </nav>
+</div>

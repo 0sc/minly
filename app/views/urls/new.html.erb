@@ -1,31 +1,40 @@
-<h1>New Url</h1>
-<p id="notice"><%= notice %></p>
-<%= render 'form' %>
-<% if @urls %>
-  <h2>Recent Urls</h2>
-  <ul>
-  <% @urls.each do |url| %>
-    <li id="<%= dom_id(url) %>"><strong>Original: <%= url.original %></strong>&emsp;
-       <strong>Shortened: <%= host_url + url.shortened %></strong>&emsp;
-       <strong>Active: <%= url.active %></strong>
-       <strong>Views: <%= url.views %></strong>
-    </li>
-  <% end %>
-  </ul>
-<% end %>
+<section class="description">
+  <div class="container">
+    <div class="eight columns offset-by-two">
+      <h2> <%= @notification? @notification.first : "Description" %> </h2>
+        <p>
+        <% if @notification %>
+          <%= @notification.last %>
+        <% else %>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <% end %>
+      </p>
+    </div>
+  </div>
+</section>
 
-<% if @popular_urls %>
-  <div class= 'popular_urls'>
-  <h2>Popular Urls</h2>
-  <ul>
-  <% @popular_urls.each do |url| %>
-    <li id="<%= dom_id(url) %>"><strong>Original: <%= url.original %></strong>&emsp;
-       <strong>Shortened: <%= host_url + url.shortened %></strong>&emsp;
-       <strong>Active: <%= url.active %></strong>
-       <strong>Views: <%= url.views %></strong>
-    </li>
-  <% end %>
-  </ul>
-</div>
-<% end %>
+<section class="recent-popular-section">
+  <div class="row">
+    <div class="one-half column">
+      <% if @urls %>
+      <div class="recent-urls url-listing">
+        <header>
+          <h3>Recent Urls</h3>
+        </header>
+        <%= show_in_list_format(@urls) %>
+      </div>
+      <% end %>
+    </div>
+    <div class="one-half column">
+      <% if @popular_urls %>
+      <div class= 'url-listing'>
+        <header>
+          <h3>Popular Urls</h3>
+        </header>
+        <%= show_in_list_format(@popular_urls) %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</section>
 <!-- <%= link_to 'Back', urls_path %> -->

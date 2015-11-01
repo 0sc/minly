@@ -6,23 +6,29 @@ class UrlsController < ApplicationController
   # GET /urls
   # GET /urls.json
   def index
-    # @urls = Url.all
+    redirect_to root_path
   end
 
   def reroute
-    @params = reroute_params[:path]
-    @status = "Not found"
-    target = Url.find_by(shortened: @params)
-    if target
-      #Do all the statistics thingy at this point
-      redirect_to (target.original) if target.active
-      @status = "Inactive"
+    incoming = reroute_params[:path]
+    if !incoming.empty?
+      target = Url.find_by(shortened: incoming)
+
+      if target
+        #Do all the statistics thingy at this point
+        if target.active
+          target.update_attribute(:views, target.views + 1)
+          redirect_to (target.original)
+          return
+        end
+        status = set_inactive_url_notification(incoming)
+      end
+      status ||= set_not_found_notification(incoming)
+      flash[:error] = 'Oops! An error occured.' + "<br />" + status
     end
 
-    # redirect_to ("http://andela.com")
-    # render :index
-    # render :inactive
-    # render :404
+    set_view_data
+    render "new"
   end
 
   # GET /urls/new
@@ -38,17 +44,29 @@ class UrlsController < ApplicationController
   # POST /urls.json
   def create
     respond_to do |format|
-      @url = Url.find_or_initialize_by(original: sanitize_url(url_params[:original]))
-      if @url.save
-        @url.save_shortened(create_shortened_url(@url.id)) if @url.shortened.nil?
+      original = sanitize_url(url_params[:original])
+      vanity_string   = sanitize_url(url_params[:shortened]) if current_user
+
+      @url = current_user ? shorten_url_for_users(original, vanity_string) : shorten_url_for_default(original)
+
+      if @url.new_record?
+        manage_save
       else
-        flash[:error] = "An error occurred with your input."
+        flash[:notice] = "Record already exists"
       end
+
         # format.html { redirect_to root_path, notice: 'Url was successfully created.' }
         # format.json { render :show, status: :created, location: @url }
       # else
       #   format.html { redirect_to root_path }
+
+        if current_user
+          redirect_to users_url
+          return
+        end
+
         set_view_data
+
         format.html { render :new }
       #   # format.json { render json: @url.errors, status: :unprocessable_entity }
       # end
@@ -87,7 +105,7 @@ class UrlsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def url_params
-      params.require(:url).permit(:original)
+      params.require(:url).permit(:original, :shortened)
     end
 
     def reroute_params
@@ -98,5 +116,6 @@ class UrlsController < ApplicationController
       @urls = Url.limit(20).order(created_at: :desc)
       @url  = Url.new
       @popular_urls = Url.order(views: :desc).limit(20)
+      @header = "main_header"
     end
 end

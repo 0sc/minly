@@ -1,0 +1,17 @@
+<header>
+  <div class="container">
+    <div class="three columns">
+      <div class="logo">
+        <%= link_to "Minly", root_path %>
+      </div>
+    </div>
+    <%= render "login_logout" %>
+  </div>
+  <div class="container">
+    <div class="eight columns offset-by-two headertext">
+      <p>Put down the pen and paper. Unleash the power of <strong>links</strong>. Create customized Urls for social media and adverts</p>
+      <%= render 'form' %>
+    </div>
+  </div>
+  <%= display_notification @notice, 'error' %>
+</header>
