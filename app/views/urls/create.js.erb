@@ -1,0 +1,7 @@
+<% if flash[:success] %>
+  $('#notification').html("<%= j render 'layouts/new_url' %>");
+<% else %>
+  $('#notification').html("<p><%= j display_notification flash %></p>");
+<% end %>
+
+$('.url-listing div').html("<%= j(list_user_urls)  if current_user%>");

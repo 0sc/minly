@@ -4,6 +4,21 @@ module UrlsHelper
       url_id.to_s(32).reverse
   end
 
+  def process_url(original, shortened)
+    original = sanitize_url(original)
+    vanity_string = shortened if current_user
+
+    url = current_user ? shorten_url_for_users(original, vanity_string) : shorten_url_for_default(original)
+
+    if url && url.new_record?
+      p "here"
+      url = manage_save(url)
+    else
+      flash[:notice] = "Record already exists" if url
+    end
+    url
+  end
+
   def host_url
     request.base_url + "/"
   end
@@ -16,10 +31,10 @@ module UrlsHelper
 
   def shorten_url_for_users(original, vanity_string)
     if vanity_string
-      if vanity_string.match(/[^A-Za-z0-9]/)
-        flash[:error] = "Error. Your custom string should be only alphanumeric characters."
-        return nil
-      end
+      # if vanity_string.match(/[^A-Za-z0-9]/)
+      #   flash[:error] = "Error. Your custom string should be only alphanumeric characters."
+      #   return nil
+      # end
       url = Url.find_or_initialize_by(shortened: vanity_string)
       url.original ||= original
     else
@@ -33,40 +48,39 @@ module UrlsHelper
     Url.find_or_initialize_by(original: original)
   end
 
-  def manage_save
-    if @url.save
-      @url.save_shortened(create_shortened_url(@url.id)) if @url.shortened.nil?
+  def manage_save(url)
+    if url.save
+      url.save_shortened(create_shortened_url(url.id)) if url.shortened.nil?
       flash[:success] = "Url was shortened successfully."
     else
-      flash[:error] = @url.errors[:original].join(", ")
+      flash[:error] = format_error_msg(url)
     end
+    url
+  end
+
+  def format_error_msg(url)
+    url.errors.full_messages.join(". ").gsub("Original", "Url input").gsub("Shortened", "Custom string")
   end
 
   def show_in_list_format(urls)
     list = ''
     urls.each do |url|
       target = host_url + url.shortened
-      list += "<li id='#{dom_id(url)}'><strong>Shortened: #{link_to(target, target)}</strong>&emsp;<strong>Views: #{url.views}</strong></li>"
+      list += "<li id='#{dom_id(url)}'>#{link_to(target, target)}</li>"
     end
-    "<section><ul>#{list}</ul></section>".html_safe
+    "<ul>#{list}</ul>".html_safe
   end
 
   def display_notification(notification)
     return unless notification
     notice = <<-EOS
-    <div class="container">
-      <div class="eight columns offset-by-two">
-        <div class="notification">
           <ul>
       EOS
         notification.each do |class_tag, message|
-          notice += "<li class='#{class_tag}'>#{message}</li>"
+          notice += "<li class='#{class_tag}'>#{message}</li>" unless class_tag.empty?
         end
     notice += <<-EOS
           </ul>
-        </div>
-      </div>
-    </div>
     EOS
     notice.html_safe
   end
@@ -79,5 +93,3 @@ module UrlsHelper
     "The url #{url} has been deactivated. You can try again later."
   end
 end
-
-  # @url = Url.new(url_params)

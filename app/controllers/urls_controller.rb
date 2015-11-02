@@ -1,7 +1,8 @@
 class UrlsController < ApplicationController
-  include UrlsHelper
+  include RequestsHelper
 
-  before_action :set_url, only: [:edit, :update, :destroy]
+  before_action :authenticate_user, :only => [:update, :destroy, :show]
+  before_action :set_url, only: [:update, :destroy]
 
   # GET /urls
   # GET /urls.json
@@ -40,72 +41,50 @@ class UrlsController < ApplicationController
     set_view_data
   end
 
-  # GET /urls/1/edit
-  def edit
+  def show
+    @url = Url.find(params[:id])
+    if @url
+      process_action_callback(@url, :success, "Url was retrieved successfully.")
+    else
+      process_action_callback(@url, :error, "Invalid params provided. Request could not be completed.")
+    end
   end
 
   # POST /urls
   # POST /urls.json
   def create
-    respond_to do |format|
-      original = sanitize_url(url_params[:original])
-      vanity_string   = url_params[:shortened] if current_user
-
-      @url = current_user ? shorten_url_for_users(original, vanity_string) : shorten_url_for_default(original)
-
-      if @url && @url.new_record?
-        manage_save
-      else
-        flash[:notice] = "Record already exists" if @url
-      end
-
-        # format.html { redirect_to root_path, notice: 'Url was successfully created.' }
-        # format.json { render :show, status: :created, location: @url }
-      # else
-      #   format.html { redirect_to root_path }
-
-        if current_user
-          redirect_to dashboard_url
-          return
-        end
-
-        set_view_data
-
-        format.html { render :new }
-      #   # format.json { render json: @url.errors, status: :unprocessable_entity }
-      # end
-    end
+    @url = process_url(url_params[:original], url_params[:shortened])
+    return_path = current_user ?
+    dashboard_url : root_path
+    process_action_callback(@url, "", "", return_path)
   end
 
   # PATCH/PUT /urls/1
   # PATCH/PUT /urls/1.json
   def update
-    respond_to do |format|
-      if @url.update(edit_params)
-        flash[:success] = 'Url was successfully updated.'
-        # format.json { render :show, status: :ok, location: @url }
-      else
-        # format.html { render :edit }
-        # format.json { render json: @url.errors, status: :unprocessable_entity }
-      end
-      format.html { redirect_to dashboard_url }
+    if @url.update(update_params)
+      process_action_callback(@url, :success, "Url was updated successfully.")
+    else
+      process_action_callback(@url, :error, "Invalid params provided. Request could not be completed.")
     end
   end
 
   # DELETE /urls/1
   # DELETE /urls/1.json
   def destroy
-    @url.destroy
-    respond_to do |format|
-      format.html { redirect_to urls_url, notice: 'Url was successfully destroyed.' }
-      format.json { head :no_content }
+    if @url
+      @url.destroy
+      process_action_callback(:success, @url, "Url was deleted successfully.")
+    else
+      process_action_callback(:error, @url, "Invalid params provided. Request could not be completed.")
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_url
-      @url = Url.find(params[:id])
+      @url = Url.find_by(:id => params[:id])
+      @url ||= Url.find_by_shortened(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -113,7 +92,7 @@ class UrlsController < ApplicationController
       params.require(:url).permit(:original, :shortened)
     end
 
-    def edit_params
+    def update_params
       params.require(:url).permit(:original, :active)
     end
 
@@ -122,9 +101,7 @@ class UrlsController < ApplicationController
     end
 
     def set_view_data
-      @urls = Url.limit(20).order(created_at: :desc)
-      @url  = Url.new
-      @popular_urls = Url.order(views: :desc).limit(20)
-      @header = "main_header"
+      @urls = Url.recent
+      @popular_urls = Url.popular
     end
 end

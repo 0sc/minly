@@ -7,15 +7,33 @@ module UsersHelper
 
   def get_statistics (url)
     data = <<-EOS
-      <p>Original: #{url.original}</p>
-      <p>Status:  #{get_status(url.active)}</p>
-      <p>Views: #{url.views}</p>
+      <p>
+      <strong>Original</strong> #{link_to url.original, url.original}<br />
+      <strong>Status</strong>  #{get_status(url.active)}<br />
+      <strong>Views</strong> #{url.views}
+      </p>
     EOS
-    data.html_safe
   end
 
   def get_status (is_active)
     is_active ?  "Active" : "Inactive"
+  end
+
+  def show_url_details (url)
+    result = get_statistics(url)
+    @target_url = url
+    result += render "urls/edit_form"
+    result.html_safe
+  end
+
+  def list_user_urls (urls = current_user.urls.order("id desc"))
+    list = ''
+    urls.each do |url|
+      target = host_url + url.shortened
+      # list += "<p id='#{dom_id(url)}'>#{link_to(target, target, remote: true)}</p>"
+      list += "<p id='#{dom_id(url)}'>#{target}</p>"
+    end
+    "#{list}".html_safe
   end
 
 end

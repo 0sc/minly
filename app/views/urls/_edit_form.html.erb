@@ -1,0 +1,12 @@
+<h4> Manage Url </h4>
+<%= form_for(@target_url, remote: true) do |f| %>
+  <%= label_tag(:original, "Edit target url") %>
+  <%= f.text_field :original, class: "u-full-width" %>
+  <label>
+  <%= f.check_box :active %>
+  <span class="label-body">Active</span>
+  </label>
+  <%= f.submit "save", class: "button button-primary" %>
+  <%= link_to 'delete', @target_url, class: "button", method: :delete, data: { confirm: 'Are you sure?'} %>
+
+<% end %>
