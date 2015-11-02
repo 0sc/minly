@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  root  'urls#new'
+  root  'urls#index'
 
-  resources :urls, only: [:new, :create, :update, :destroy, :show]
-  get '/urls', to: "urls#new"
+  resources :urls, only: [:index, :create, :update, :destroy, :show]
+  get '/urls', to: "urls#index"
   get "auth/:provider/callback", to: "sessions#create"
   get 'auth/failure', to: redirect("/")
   get '/users', to: "users#index", as: "dashboard"

@@ -1,5 +1,5 @@
 class UrlsController < ApplicationController
-  include RequestsHelper
+  include UrlProcessor
 
   before_action :authenticate_user, :only => [:update, :destroy, :show]
   before_action :set_url, only: [:update, :destroy]
@@ -7,11 +7,6 @@ class UrlsController < ApplicationController
   # GET /urls
   # GET /urls.json
   def index
-    redirect_to root_path
-  end
-
-  # GET /urls/new
-  def new
   end
 
   def show

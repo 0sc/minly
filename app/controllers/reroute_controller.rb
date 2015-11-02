@@ -1,5 +1,5 @@
 class RerouteController < ApplicationController
-  include RerouteHelper
+  include RerouteManager
 
   def index
     target = reroute_params[:path]
@@ -10,7 +10,7 @@ class RerouteController < ApplicationController
       manage_redirection(target)
     else
       #Maybe show error message!??
-      redirect_to root_path
+      manage_inactive_target
     end
   end
 

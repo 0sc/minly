@@ -1,5 +1,4 @@
-module RequestsHelper
-  include UrlsHelper
+module ApiMethods
   def expand_url(shortened)
     return [invalid_url_error] unless shortened
     request_status([Url.get_url(shortened, :shortened).as_json])
@@ -11,15 +10,6 @@ module RequestsHelper
 
   def recent_urls
     request_status(Url.recent)
-  end
-
-  def process_action_callback(url, status, message, return_path = dashboard_url)
-    flash[status] = message if status
-    respond_to do |format|
-      format.html { redirect_to return_path}
-      format.json { render json: {:status => status, :status_info => flash[status], payload: url} }
-      format.js {render :layout => false}
-    end
   end
 
   def set_status(status, info)

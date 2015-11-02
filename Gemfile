@@ -19,6 +19,7 @@ gem 'puma'
 gem 'fnordmetric'
 gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
 gem 'figaro'
+gem 'draper'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
