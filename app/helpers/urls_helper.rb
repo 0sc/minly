@@ -1,9 +1,11 @@
 module UrlsHelper
+  def host_url
+    request.base_url + "/"
+  end
+
   def process_url(original, vanity_string)
     original = sanitize_url(original)
-
     url = shorten_url(original, vanity_string)
-
     if url && url.new_record?
       url = manage_save(url)
     else
@@ -74,11 +76,8 @@ module UrlsHelper
     notification.each do |class_tag, message|
       notice += "<li class='#{class_tag}'>#{message}</li>" unless class_tag.empty?
     end
+    flash.discard #clear flash messages
     "<ul>#{notice}</ul>".html_safe
-  end
-
-  def set_not_found_notification(url)
-    "We can't find any record relating to #{url}. Please cross-check your entry and try again. "
   end
 
 end

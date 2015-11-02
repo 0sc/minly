@@ -1,5 +1,6 @@
 <section class="container add-top">
     <h2>Url Analytics</h2>
+    <p><small>Api key: <%= current_user.token %></small></p>
     <% if @urls.size > 0 %>
     <div class= "row add-top">
       <div class="four columns responsive">
@@ -19,8 +20,7 @@
       </div>
       <% else %>
       <div class="twelve columns">
-        <%=  User.first.token %>
-          <p>All your shortened urls and indept analytics of usage will be shown. Try it out; shorten a url.</p>
+        <p>All your shortened urls and indept analytics of usage will be shown. Try it out; shorten a url.</p>
       </div>
     <% end %>
   </div>

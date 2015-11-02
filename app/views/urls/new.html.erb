@@ -11,27 +11,18 @@
   </div>
   <div class="row add-top"></div>
 </div>
-    <!-- <div class="eight columns offset-by-two">
-      <h2> <%= @notification? @notification.first : "Description" %> </h2>
-        <p>
-        <% if @notification %>
-          <%= @notification.last %>
-        <% end %>
-      </p>
-    </div> -->
 <hr />
 <div class="container">
   <section class="row add-top">
     <div class="one-half column">
-      <img src="http://www.eleventhedition.com/wp-content/uploads/2015/02/responsive.png" alt="responsive" />
+      <%= image_tag "", alt: "reponsive"%>
       <h4>Popular Minlys</h4>
-      <%= show_in_list_format(@popular_urls) %>
+      <%= show_in_list_format(Url.popular) %>
     </div>
     <div class="one-half column">
-      <img src="http://www.eleventhedition.com/wp-content/uploads/2015/02/responsive.png" alt="responsive"/>
+      <%= image_tag "", alt: "reponsive"%>
       <h4>Recent Minlys</h4>
-      <p><%= show_in_list_format(@urls) %></p>
+      <p><%= show_in_list_format(Url.recent) %></p>
     </div>
   </section>
 </div>
-<!-- <%= link_to 'Back', urls_path %> -->

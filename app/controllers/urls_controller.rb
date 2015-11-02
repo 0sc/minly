@@ -12,7 +12,6 @@ class UrlsController < ApplicationController
 
   # GET /urls/new
   def new
-    set_view_data
   end
 
   def show
@@ -69,10 +68,5 @@ class UrlsController < ApplicationController
 
     def update_params
       params.require(:url).permit(:original, :active)
-    end
-
-    def set_view_data
-      @urls = Url.recent
-      @popular_urls = Url.popular
     end
 end

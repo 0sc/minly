@@ -12,11 +12,15 @@ class User < ActiveRecord::Base
     end
   end
 
-  def get_recent_urls
+  def get_urls
     urls.order("id desc")
   end
 
-  def self.get_user(arg, col=:id)
+  def search_url_for(url, col = :shortened)
+    urls.where(col => url)
+  end
+
+  def self.get_user(arg, col = :id)
     find_by(col => arg)
   end
 

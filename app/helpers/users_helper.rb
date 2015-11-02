@@ -30,7 +30,6 @@ module UsersHelper
     list = ''
     urls.each do |url|
       target = host_url + url.shortened
-      # list += "<p id='#{dom_id(url)}'>#{link_to(target, target, remote: true)}</p>"
       list += "<p id='#{dom_id(url)}'>#{target}</p>"
     end
     "#{list}".html_safe

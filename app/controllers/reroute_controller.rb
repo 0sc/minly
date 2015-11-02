@@ -1,12 +1,12 @@
-class UrlsController < ApplicationController
+class RerouteController < ApplicationController
   include RerouteHelper
 
   def index
     target = reroute_params[:path]
     #ARM breaks if null query
-    target = Url.get_url(target, :shortened) unless target.empty?
+    target = Url.get_url(target, :shortened) if target
 
-    if target && !target.empty?
+    if target
       manage_redirection(target)
     else
       #Maybe show error message!??

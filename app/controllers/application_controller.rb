@@ -21,8 +21,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def host_url
-    request.base_url + "/"
-  end
-
 end
