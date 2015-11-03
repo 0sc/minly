@@ -9,8 +9,7 @@ class RerouteController < ApplicationController
     if target
       manage_redirection(target)
     else
-      #Maybe show error message!??
-      manage_inactive_target
+      manage_missing_target(target)
     end
   end
 

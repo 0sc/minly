@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root  'urls#index'
 
   resources :urls, only: [:index, :create, :update, :destroy, :show]
+  get '/urls/:id/:user_token', to: "urls#show"
   get '/urls', to: "urls#index"
   get "auth/:provider/callback", to: "sessions#create"
   get 'auth/failure', to: redirect("/")

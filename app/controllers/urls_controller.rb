@@ -1,6 +1,4 @@
 class UrlsController < ApplicationController
-  include UrlProcessor
-
   before_action :authenticate_user, :only => [:update, :destroy, :show]
   before_action :set_url, only: [:update, :destroy]
 
@@ -22,9 +20,13 @@ class UrlsController < ApplicationController
   # POST /urls.json
   def create
     params = url_params
-    @url = process_url(params[:original], params[:shortened])
-    return_path = current_user ?
-    dashboard_url : root_path
+    authenticate_user_with_token
+    require "pry"; binding.pry
+    processor = UrlProcessor.new(current_user)
+    @url, notice = processor.process_url(params[:original], params[:shortened])
+    return_path = current_user ? dashboard_url : root_path
+
+    add_to_flash_message(notice)
     process_action_callback(@url, "", "", return_path)
   end
 
@@ -58,7 +60,7 @@ class UrlsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def url_params
-      params.require(:url).permit(:original, :shortened)
+      params.require(:url).permit(:original, :shortened, :user_token)
     end
 
     def update_params

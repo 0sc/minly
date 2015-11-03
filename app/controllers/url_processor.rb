@@ -1,11 +1,8 @@
-module UrlProcessor
-  def process_action_callback(url, status, message, return_path = dashboard_url)
-    flash[status] = message if status
-    respond_to do |format|
-      format.html { redirect_to return_path}
-      format.json { render json: {:status => status, :status_info => flash[status], payload: url} }
-      format.js {render :layout => false}
-    end
+class UrlProcessor
+  attr_reader :user, :notification
+  def initialize(current_user)
+    @user = current_user
+    @notification = Hash.new
   end
 
   def process_url(original, vanity_string)
@@ -14,13 +11,13 @@ module UrlProcessor
     if url && url.new_record?
       url = manage_save(url)
     else
-      flash[:notice] = "Record already exists" if url
+      add_notification_message(:success, "Minly created successfully.") if url
     end
-    url
+    return url, notification
   end
 
   def shorten_url(original, vanity_string)
-    if current_user
+    if user
       return shorten_url_for_users(original, vanity_string)
     else
       return shorten_url_for_default(original)
@@ -28,18 +25,20 @@ module UrlProcessor
   end
 
   def shorten_url_for_users(original, vanity_string)
-    if vanity_string
+
+    if vanity_string && !vanity_string.empty?
       url = Url.init_with(shortened: vanity_string)
       url.original ||= original
     else
       url = shorten_url_for_default(original)
     end
-    url.user_id ||= current_user.id
+    url.user_id ||= user.id
     url
   end
 
   def shorten_url_for_default(original)
     Url.init_with(original: original)
+    # Url.new(original: original)
   end
 
   def sanitize_url(url)
@@ -51,9 +50,9 @@ module UrlProcessor
   def manage_save(url)
     if url.save
       url.save_shortened(create_shortened_url(url.id)) if url.shortened.nil?
-      flash[:success] = "Url was shortened successfully."
+      add_notification_message(:success, "Url was shortened successfully.")
     else
-      flash[:error] = format_error_msg(url)
+      add_notification_message(:error, format_error_msg(url))
     end
     url
   end
@@ -66,4 +65,7 @@ module UrlProcessor
     url.errors.full_messages.join(". ").gsub("Original", "Url input").gsub("Shortened", "Custom string")
   end
 
+  def add_notification_message(tag, msg)
+    @notification[tag] = msg
+  end
 end
