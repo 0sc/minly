@@ -15,7 +15,6 @@ gem "omniauth-twitter"
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'valid_url'
-gem 'puma'
 gem 'fnordmetric'
 gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
 gem 'figaro'
@@ -52,4 +51,5 @@ end
 
 group :production do
   gem 'pg'
+  gem 'puma'
 end

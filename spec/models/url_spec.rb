@@ -10,8 +10,12 @@ RSpec.describe Url, type: :model do
       expect(build(:url, original: nil)).to_not be_valid
     end
 
-    it "is valid when an original url is provided and vanity_string is not provided" do
-      expect(build(:url, shortened: nil)).to be_valid  
+    it "is valid when an original url is provided and vanity string is not provided" do
+      expect(build(:url, shortened: nil)).to be_valid
+    end
+
+    it "is valid when an original url is provided and vanity string is provided" do
+      expect(build(:url)).to be_valid
     end
   end
 end

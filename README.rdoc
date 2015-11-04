@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/andela-ooranagwa/minly/badges/gpa.svg)](https://codeclimate.com/github/andela-ooranagwa/minly)
+
 == README
 
 This README would normally document whatever steps are necessary to get the
