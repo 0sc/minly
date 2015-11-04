@@ -12,11 +12,11 @@ class Url < ActiveRecord::Base
     update_attribute(:views, views + 1)
   end
 
-  def self.popular(num = 20)
+  def self.popular(num = 5)
     order(views: :desc).limit(num)
   end
 
-  def self.recent(num = 20)
+  def self.recent(num = 5)
     limit(num).order(created_at: :desc)
   end
 

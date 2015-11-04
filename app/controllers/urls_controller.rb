@@ -21,7 +21,7 @@ class UrlsController < ApplicationController
   def create
     params = url_params
     authenticate_user_with_token
-    require "pry"; binding.pry
+
     processor = UrlProcessor.new(current_user)
     @url, notice = processor.process_url(params[:original], params[:shortened])
     return_path = current_user ? dashboard_url : root_path

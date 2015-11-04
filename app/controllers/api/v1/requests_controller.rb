@@ -1,10 +1,12 @@
 class Api::V1::RequestsController < Api::V1::BaseController
-  include RequestsHelper
-
+  include APIMethods
   def show
     url = params[:short_url]
     target_action = params[:target]
-    respond_with get_request_managers(target_action, url)
+    response =  get_request_managers(target_action, url)
+    respond_to do |format|
+      format.json {render json: response}
+    end
     # respond_with popular_urls
   end
 

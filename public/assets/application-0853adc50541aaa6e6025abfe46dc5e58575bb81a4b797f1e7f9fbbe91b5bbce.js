@@ -12157,8 +12157,8 @@ ZeroClipboard.Client.prototype = {
 }).call(this);
 (function() {
   $(document).on("page:change", function() {
-    $(".url-listing p:first").addClass("active");
-    return $(".url-listing p").click(function() {
+    $(".url-listing div p:first").addClass("active");
+    return $(".url-listing").on("click", "div p", function() {
       var link;
       $("p").removeClass("active");
       $(this).addClass("active");

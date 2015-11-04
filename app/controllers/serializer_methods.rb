@@ -1,4 +1,4 @@
-module ARMResponder
+module SerializerMethods
   def process_action_callback(url, status, message, return_path = dashboard_url)
     flash[status] = message if status
     respond_to do |format|
@@ -9,6 +9,6 @@ module ARMResponder
   end
 
   def add_to_flash_message(hash)
-    hash.each { |key, val| flash[key] = val }
+    flash.merge(hash)
   end
 end

@@ -1,7 +1,7 @@
-module ApiMethods
+module APIMethods
   def expand_url(shortened)
-    return [invalid_url_error] unless shortened
-    request_status([Url.get_url(shortened, :shortened).as_json])
+    return invalid_url_error unless shortened
+    request_status(Url.get_url(shortened, :shortened).as_json)
   end
 
   def popular_urls
@@ -20,13 +20,13 @@ module ApiMethods
   end
 
   def request_status(result, error_info="", success_info="")
-    if result && !result.first.nil?
+    if result
       stat = success_info.empty? ? success_status : success_status(success_info)
     else
       stat = error_info.empty? ? error_status : error_status(error_info)
-      result = []
+      result = {}
     end
-    result << stat
+    stat.merge(payload: result)
   end
 
   def success_status (info = "Request was processed successfully.")

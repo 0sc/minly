@@ -1,7 +1,7 @@
-require "arm_responder"
+require "serializer_methods"
 class ApplicationController < ActionController::Base
 
-  include ARMResponder
+  include SerializerMethods
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :exception
@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.get_user(session[:user_id]) if session[:user_id]
-    @current_user ||= authenticate_user_with_token
+    authenticate_user_with_token unless @current_user
+    @current_user
   end
   helper_method :current_user
 
@@ -23,6 +24,6 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user_with_token
-    User.get_user(params[:user_token], :token) if params[:user_token]
+    @current_user = User.get_user(params[:user_token], :token) if params[:user_token]
   end
 end

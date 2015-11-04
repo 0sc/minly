@@ -1,4 +1,4 @@
-module UrlsHelper  
+module UrlsHelper
   def show_in_list_format(urls)
     list = ''
     urls.each do |url|
@@ -18,4 +18,17 @@ module UrlsHelper
     "<ul>#{notice}</ul>".html_safe
   end
 
+  def header_message
+    return "Hello, #{current_user.name}" if current_user
+    "Urls You can remember!"
+  end
+
+  def header_tagline
+    return "Let's make some minly's" if current_user
+    "Create customized Urls for social media and adverts"
+  end
+
+  def get_fieldwidth
+    current_user ? %w{four two two} :  %w{four three two}
+  end
 end
