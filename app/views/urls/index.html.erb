@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row add-top">
+    <div class="five columns responsive">
+      <h2>More with Minly</h2>
+      <p>You would like to know more about people that are using your links. Valuable information such as the location, referrer, device type, browser are readily available in our user section.</p>
+      <%= link_to("User section", dashboard_url, class: "button button-primary") %>
+    </div>
+    <div class="six columns offset-by-one right">
+      <%= image_tag "webanalytics.png" %>
+    </div>
+  </div>
+  <div class="row add-top"></div>
+</div>
+<hr />
+<div class="container">
+  <section class="row add-top">
+    <div class="five columns popular offset-by-one left">
+      <%= image_tag "popular.png", alt: "reponsive"%>
+      <h4>Popular Minlys</h4>
+      <%= show_in_list_format(Url.popular) %>
+    </div>
+    <div class="six columns recent">
+      <%= image_tag "recent.png", alt: "reponsive"%>
+      <h4>Recent Minlys</h4>
+      <p><%= show_in_list_format(Url.recent) %></p>
+    </div>
+  </section>
+</div>

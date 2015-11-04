@@ -1,11 +1,12 @@
 <section class="container add-top">
     <h2>Url Analytics</h2>
-    <% if @urls.size > 0 %>
+    <p><small>Api key: <%= @user_decorator.get_user_token %></small></p>
+    <% if @user_decorator.has_urls? %>
     <div class= "row add-top">
       <div class="four columns responsive">
         <div class="url-listing">
           <h4>My Urls</h4>
-          <div><%= list_user_urls(@urls) %></div>
+          <div><%= list_user_urls(@user_decorator.my_urls) %></div>
         </div>
         <div id="trigger"><%= link_to "", "#",remote:true %></div>
       </div>
@@ -13,14 +14,13 @@
         <div class="statistics">
           <h4>Details</h4>
           <div class='edit_form' id='edit_form'>
-            <%= show_url_details(@urls.first) %>
+            <%= show_url_details(@user_decorator.first_url) %>
           </div>
         </div>
       </div>
       <% else %>
       <div class="twelve columns">
-        <%=  User.first.token %>
-          <p>All your shortened urls and indept analytics of usage will be shown. Try it out; shorten a url.</p>
+        <p>All your shortened urls and indept analytics of usage will be shown. Try it out; shorten a url.</p>
       </div>
     <% end %>
   </div>
