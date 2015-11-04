@@ -9,6 +9,6 @@ module SerializerMethods
   end
 
   def add_to_flash_message(hash)
-    flash.merge(hash)
+    hash.each { |key, val| flash[key] = val}
   end
 end
