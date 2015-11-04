@@ -14,13 +14,13 @@
 <hr />
 <div class="container">
   <section class="row add-top">
-    <div class="one-half column">
-      <%= image_tag "", alt: "reponsive"%>
+    <div class="five columns popular offset-by-one left">
+      <%= image_tag "popular.png", alt: "reponsive"%>
       <h4>Popular Minlys</h4>
       <%= show_in_list_format(Url.popular) %>
     </div>
-    <div class="one-half column">
-      <%= image_tag "", alt: "reponsive"%>
+    <div class="six columns recent">
+      <%= image_tag "recent.png", alt: "reponsive"%>
       <h4>Recent Minlys</h4>
       <p><%= show_in_list_format(Url.recent) %></p>
     </div>

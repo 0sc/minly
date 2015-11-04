@@ -22,6 +22,7 @@ h2, h3, h4 {
     text-transform: uppercase;
     letter-spacing: 2px;
     margin: 0 0 23px 0;
+    text-decoration: underline;
     }
 p {
   font-family: 'Roboto', sans-serif;
@@ -72,6 +73,7 @@ header {
 }
 hr {
   width: 50%;
+  border-bottom: medium solid #000
 }
 .add-top{
   margin-top: 7rem;
@@ -93,7 +95,7 @@ footer nav ul li a {
 .url-listing h4, .statistics h4 {
   text-align: center;
 }
-.url-listing p.active, .url-listing p:hover, .statistics{
+.url-listing p.active, .url-listing p:hover {
   background-color: #f1f1f1;
   -moz-box-shadow: 0 1px 3px rgba(0,0,0,.2);
   -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.2);
@@ -108,7 +110,6 @@ footer nav ul li a {
   -webkit-margin-after: 0px;
   padding: 0.8rem;
 }
-
 .statistics strong{
   padding-right: 3em;
 }
@@ -117,4 +118,26 @@ footer nav ul li a {
 }
 .trigger{
   display: none;
+}
+.popular, .recent {
+  text-align: left;
+}
+.popular {
+  margin-left: 26%;
+}
+.recent {
+  margin-left: 4%
+}
+.url-listing div{
+  height: 100px;
+  overflow-y: scroll;
+}
+.unshift-left {
+  margin-left: -8px;
+}
+.popular img, .recent img{
+  height: 100px;
+  width: 100px;
+  margin-left: 10%;
+  margin-bottom: 5%;
 }

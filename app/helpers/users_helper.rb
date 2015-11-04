@@ -8,7 +8,7 @@ module UsersHelper
   def get_statistics (url)
     data = <<-EOS
       <p>
-      <strong>Original</strong> #{link_to url.original, url.original}<br />
+      <strong>Original</strong> #{link_to url.original, url.original, class: "unshift-left"}<br />
       <strong>Status</strong>  #{get_status(url.active)}<br />
       <strong>Views</strong> #{url.views}
       </p>

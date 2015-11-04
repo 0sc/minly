@@ -29,8 +29,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
-  gem 'pry-nav'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
   gem 'faker'
+  gem 'pry-nav'
   gem 'sqlite3'
 end
 
