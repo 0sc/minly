@@ -49,16 +49,11 @@ class UrlProcessor
 
   def manage_save(url)
     if url.save
-      url.save_shortened(create_shortened_url(url.id)) if url.shortened.nil?
       add_notification_message(:success, "Url was shortened successfully.")
     else
       add_notification_message(:error, format_error_msg(url))
     end
     url
-  end
-
-  def create_shortened_url (url_id)
-      url_id.to_s(32).reverse
   end
 
   def format_error_msg(url)

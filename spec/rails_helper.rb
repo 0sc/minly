@@ -12,6 +12,7 @@ require 'spec_helper'
 require 'rspec/rails'
 # require "rspec/autorun"
 require "capybara/rspec"
+require "faker"
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
