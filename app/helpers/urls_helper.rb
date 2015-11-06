@@ -2,10 +2,14 @@ module UrlsHelper
   def show_in_list_format(urls)
     list = ''
     urls.each do |url|
-      target = host_url + url.shortened
-      list += "<li id='#{dom_id(url)}'>#{link_to(target, target)}</li>"
+      target = complete_shortened_link(url.shortened)
+      list += "<li id='#{dom_id(url)}'>#{link_to(target, target, {target: "_blank"})}</li>"
     end
     "<ul>#{list}</ul>".html_safe
+  end
+
+  def complete_shortened_link(shortened)
+    host_url + shortened
   end
 
   def display_notification(notification)

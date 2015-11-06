@@ -1,7 +1,3 @@
-@font-face {
- font-family: "QaskinWhite";
- src: url(QaskinWhite_PersonalUse.ttf) format("truetype");
-}
 body {
   text-align: center;
   background-image:
@@ -116,6 +112,7 @@ footer nav ul li a {
 #edit_form{
   padding-left: 1em;
 }
+#form-ajax-loader {display: none}
 .trigger{
   display: none;
 }
@@ -129,11 +126,11 @@ footer nav ul li a {
   margin-left: 4%
 }
 .url-listing div{
-  height: 100px;
+  height: 31rem;
   overflow-y: scroll;
 }
 .unshift-left {
-  margin-left: -8px;
+  margin-left: -4px;
 }
 .popular img, .recent img{
   height: 100px;

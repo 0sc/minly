@@ -2,11 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).ready ->
-  $('a#copy').zclip
-    path: 'ZeroClipboard.swf'
-    copy: ->
-      $('#new_shortened_url').text()
-    afterCopy: ->
-      alert 'link copied!'
-      return
+  $(".create-submit").click ->
+    $("#form-ajax-loader").fadeIn("slow")
+    return
   return
