@@ -6,6 +6,7 @@ module UsersHelper
   end
 
   def get_statistics (url)
+    return unless url
     content = details_content_layout("Original", url.original, true, true)
     content << details_content_layout("Minly  ", complete_shortened_link(url.shortened), true, true)
     content << details_content_layout("Views", url.views, false, false)

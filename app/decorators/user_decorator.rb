@@ -9,7 +9,7 @@ class UserDecorator < Draper::Decorator
 
   def has_urls?
     @my_urls = get_urls
-    my_urls.size
+    my_urls.size > 0
   end
 
   def last_url
