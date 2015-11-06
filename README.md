@@ -1,13 +1,13 @@
 [![Code Climate](https://codeclimate.com/github/andela-ooranagwa/minly/badges/gpa.svg)](https://codeclimate.com/github/andela-ooranagwa/minly)
 
-== README
+# README
 ## Overview
 
-The need to have short, easy-to-remember urls is the main major motivation behind Minly. The app enable users create short, simple memorable urls, _minly_s, for various engagements on the internet. It provides a free, flexible customization options such that users get to decide what they want their _minly_to be. Long, complex urls can be shortened to just a single digit or letter using Minly.
+The need to have short, easy-to-remember urls is the main major motivation behind Minly. The app enable users create short, simple memorable urls, _minlys_, for various engagements on the internet. It provides a free, flexible customization options such that users get to decide what they want their _minly_ to be. Long, complex urls can be shortened to just a single digit or letter using Minly.
 
-Behind the scene, Minly elegantly and seamlessly redirects request to any _minly_ to their original target url; while also keep tabs of the visitors statistics. The statistics gathered are readily available for users to use in keeping track of and analyzing usage of their _minly_(s). With this information, users get see which of their _minly_gets more visits and manage them as they desire.
+Behind the scene, Minly elegantly and seamlessly redirects request to any _minly_ to their original target url; while also keep tabs of the visitors statistics. The statistics gathered are readily available for users to use in keeping track of and analyzing usage of their _minly(s)_. With this information, users get see which of their _minly_ gets more visits and manage them as they desire.
 
-Minly allows users to manage their url. Users can redirect the target of their _minly_, deactivate and/or delete their _minly_. Requests to deactivated and/or deleted _minly_ will redirected with the appropriate error message.
+Minly allows users to manage their url. Users can redirect the target of their _minly_ , deactivate and/or delete their _minly_ . Requests to deactivated and/or deleted _minly_ will redirected with the appropriate error message.
 
 ## Using the Application
 
@@ -18,11 +18,11 @@ Minly is built with version 4.2.4 the popular Rails framework using the Ruby pro
 *   if Ruby is not installed checkout the [ruby installation guide](https://www.ruby-lang.org/en/downloads/) for guidelines to setup Ruby on your machine
 *   if Rails is not installed checkout the [Rails installation guide](http://rubyonrails.org/download/) for guidelines to setup rails on you machine.
 
-Also check for and confirm the [installation of gem](http://guides.rubygems.org/rubygems-basics/) and [bundler](http://rubygems.org) on your machine. These will allow you install other libraries (_gems_) required by Minly.
+Also check for and confirm the [installation of gem](http://guides.rubygems.org/rubygems-basics/) and [bundler](http://rubygems.org) on your machine. These will allow you install other libraries ( _gems_ ) required by Minly.
 
 ### Running the application
 
-First [clone this repo](clone). Then from your terminal (or command prompt) navigate to the folder where you have cloned Minly(__cd path/to/minly/__).
+First [clone this repo](clone). Then from your terminal (or command prompt) navigate to the folder where you have cloned Minly( __cd path/to/minly/__ ).
 
 *   Run __bundle install__ to install all Minly dependencies.
 *   Run __rake db:migrate__ to setup the app database
