@@ -285,7 +285,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers!
-  byebug
+  byebug (~> 6.0.2)
   capybara
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)

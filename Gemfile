@@ -28,7 +28,7 @@ gem 'turbolinks'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
-  gem 'byebug'
+  gem 'byebug', '~> 6.0.2'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
