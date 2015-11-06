@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   def create
     user = User.from_omniauth(env['omniauth.auth'])
 
-    if user.id
+    if user && user.id
       session[:user_id] = user.id
       flash[:notice] = "Signed in successfully!"
       redirect_to dashboard_path
@@ -14,6 +14,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_url, notice: "Signed out"
+    flash[:notice] = "Signed out"
+    redirect_to root_url
   end
 end
