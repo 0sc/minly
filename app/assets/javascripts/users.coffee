@@ -3,8 +3,8 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).on "page:change", ->
-  $(".url-listing p:first").addClass("active")
-  $(".url-listing p").click ->
+  $(".url-listing div p:first").addClass("active")
+  $(".url-listing").on "click", "div p", ->
     $("p").removeClass("active")
     $(this).addClass("active")
     link = "/urls/" + ($(this).attr("id").replace("url_", ""))

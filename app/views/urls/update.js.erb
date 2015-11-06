@@ -2,3 +2,4 @@ $('#notification').html("<p><%= j display_notification flash %></p>");
 $("#edit_form").slideUp();
 $('#edit_form').html("<%= j show_url_details(@url) %>");
 $("#edit_form").show("slow");
+<% flash.clear %>

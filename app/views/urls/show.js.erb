@@ -1,6 +1,7 @@
 <% if flash[:error] %>
-$('#notification').html("<p><%= j display_notification flash %></p>");
+  $('#notification').html("<p><%= j display_notification flash %></p>");
 <% end %>
 $("#edit_form").fadeOut();
 $('#edit_form').html("<%= j show_url_details(@url) %>");
 $("#edit_form").show("slow");
+<% flash.clear %>

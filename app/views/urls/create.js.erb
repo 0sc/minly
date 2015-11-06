@@ -1,3 +1,4 @@
+$("#form-ajax-loader").fadeOut("slow")
 <% if flash[:success] %>
   $('#notification').html("<%= j render 'layouts/new_url' %>");
 <% else %>
@@ -5,3 +6,4 @@
 <% end %>
 
 $('.url-listing div').html("<%= j(list_user_urls)  if current_user%>");
+<% flash.clear %>

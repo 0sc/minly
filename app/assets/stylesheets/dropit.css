@@ -1,0 +1,76 @@
+/*
+ * Dropit v1.1.0
+ * http://dev7studios.com/dropit
+ *
+ * Copyright 2012, Dev7studios
+ * Free to use and abuse under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ */
+
+/* These styles assume you are using ul and li */
+.dropit {
+  list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.dropit .dropit-trigger { position: relative; }
+.dropit .dropit-submenu {
+  position: absolute;
+  top: 100%;
+  left: 0; /* dropit left or right */
+  z-index: 1000;
+  display: none;
+  min-width: 150px;
+  list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.dropit .dropit-open .dropit-submenu { display: block; }
+/*
+	LEVEL TWO
+*/
+ul.dropit ul {
+  border: solid 1px #ccc;
+  border-top: none;
+  list-style: none;
+  box-shadow: 0px 1px 5px #ddd;
+  display: none;
+  position: absolute;
+  z-index: 2000;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  overflow: auto;
+}
+
+ul.dropit ul li {
+	font-weight: normal;
+	color: #000;
+  border-bottom: 1px solid #ccc;
+	float: none;
+  padding: 10px;
+  margin-bottom: 0;
+  display: block;
+  border-bottom: solid 1px #ddd;
+  overflow: hidden;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  -ms-transition: all 0.25s ease-in-out;
+}
+  /* IE 6 & 7 Needs Inline Block */
+ul.dropit ul li a {
+	border-right: none;
+	width: 50%;
+	display: inline-block;
+  background-color: transparent;
+  color: #000
+}
+ul.dropit ul li a img {
+    float: left;
+    margin-right: 15px;
+    margin-left: 5px;
+}
