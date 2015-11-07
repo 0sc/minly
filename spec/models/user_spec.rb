@@ -1,5 +1,4 @@
 require 'rails_helper'
-require "helpers/omniauth_helper"
 
 RSpec.describe User, type: :model do
   describe "#from_omniauth" do

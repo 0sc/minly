@@ -1,4 +1,4 @@
 <div class="copy">
   <h5 id="new_shortened_url"><%= host_url + @url.shortened %></h5>
-  <p><a href="#" id ="copy">copy link to clipboard</a>  &emsp; | &emsp;share &emsp; | <%= link_to "visit", "/" + @url.shortened, {target: "_blank"} %></p>
+  <p>share &emsp; | &emsp;<%= link_to "visit", "/" + @url.shortened, {target: "_blank"} %></p>
 </div>

@@ -7,16 +7,17 @@ RSpec.describe UrlsController, type: :routing do
       expect(:get => "/urls").to route_to("urls#index")
     end
 
-    it "routes to #new" do
-      expect(:get => "/urls/new").to route_to("urls#new")
+    it "does not routes to #new" do
+      expect(:get => "/urls/new").to route_to("urls#show", :id => "new")
     end
 
     it "routes to #show" do
       expect(:get => "/urls/1").to route_to("urls#show", :id => "1")
+      expect(:get => "/urls/1/12345").to route_to("urls#show", :id => "1", user_token: "12345")
     end
 
     it "routes to #edit" do
-      expect(:get => "/urls/1/edit").to route_to("urls#edit", :id => "1")
+      expect(:get => "/urls/1/edit").to route_to("urls#show", :id => "1", user_token: "edit")
     end
 
     it "routes to #create" do

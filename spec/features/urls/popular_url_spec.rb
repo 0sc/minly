@@ -1,13 +1,13 @@
 require "rails_helper"
 
-def create_url_and_visit_page
-  10.times { create(:url) }
-  visit "/"
+def create_url_and_visit_page(num=5)
+  num.times { create(:url) }
+  visit root_path
 end
 
 feature "Popular url" do
   it "displays popular urls on visit to the site" do
-    visit "/"
+    visit root_path
     expect(page).to have_content "Popular Minlys"
   end
 
@@ -37,20 +37,7 @@ feature "Popular url" do
       visit "/"
       expect(page).to have_content "Popular Minlys"
       within ".popular" do
-        expect(page).not_to have_content "ul"
-      end
-    end
-
-    it "redirects to the original url when clicked" do
-      popular = create(:url, views: 100000)
-      create_url_and_visit_page
-      within ".popular" do
-        click_link (host_url + popular.shortened)
-        expect(response).to redirect_to popular.original
-      end
-      visit "/"
-      within ".popular" do
-        expect(page).to have_content(100001)
+        expect(page).not_to have_css("ul")
       end
     end
   end

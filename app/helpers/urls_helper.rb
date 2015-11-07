@@ -1,5 +1,6 @@
 module UrlsHelper
   def show_in_list_format(urls)
+    return unless urls && urls.size > 0
     list = ''
     urls.each do |url|
       target = complete_shortened_link(url.shortened)
