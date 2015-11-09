@@ -61,6 +61,6 @@ class UrlProcessor
   end
 
   def add_notification_message(tag, msg)
-    @notification[tag] = msg
+    @notification = [tag, msg]
   end
 end

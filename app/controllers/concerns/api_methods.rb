@@ -20,7 +20,7 @@ module APIMethods
   end
 
   def request_status(result, error_info="", success_info="")
-    if result
+    if result && !result.empty?
       stat = success_info.empty? ? success_status : success_status(success_info)
     else
       stat = error_info.empty? ? error_status : error_status(error_info)

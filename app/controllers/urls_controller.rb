@@ -26,8 +26,7 @@ class UrlsController < ApplicationController
     @url, notice = processor.process_url(params[:original], params[:shortened])
     return_path = current_user ? dashboard_url : root_path
 
-    add_to_flash_message(notice)
-    process_action_callback(@url, "", "", return_path)
+    process_action_callback(@url, notice.first, notice.last, return_path)
   end
 
   # PATCH/PUT /urls/1

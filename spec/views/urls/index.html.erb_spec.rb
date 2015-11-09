@@ -2,24 +2,14 @@ require 'rails_helper'
 
 RSpec.describe "urls/index", type: :view do
   before(:each) do
-    assign(:urls, [
-      Url.create!(
-        :original => "Original",
-        :redirect => "Redirect",
-        :active => "Active"
-      ),
-      Url.create!(
-        :original => "Original",
-        :redirect => "Redirect",
-        :active => "Active"
-      )
-    ])
+    create(:url, shortened: "minly")
+    assign(:urls, build(:url))
   end
 
   it "renders a list of urls" do
     render
-    assert_select "tr>td", :text => "Original".to_s, :count => 2
-    assert_select "tr>td", :text => "Redirect".to_s, :count => 2
-    assert_select "tr>td", :text => "Active".to_s, :count => 2
+    assert_select ".popular > ul", :text => "http://test.host/minly".to_s, :count => 1
+    assert_select ".recent > ul", :text => "http://test.host/minly".to_s, :count => 1
   end
+
 end
