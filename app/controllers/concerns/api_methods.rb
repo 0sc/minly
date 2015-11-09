@@ -41,8 +41,8 @@ module APIMethods
     error_status("Invalid url provided.")
   end
 
-  def get_user(token)
-    User.get_user(user_token, :token)
-  end
+  # def get_user(token)
+  #   User.get_user(user_token, :token)
+  # end
 
 end

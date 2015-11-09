@@ -1,8 +1,7 @@
 require "rails_helper"
 
-def fill_form (input = Faker::Internet.url)
+def fill_minly_form (input = Faker::Internet.url)
   visit root_path
-
   within ".welcome" do
     fill_in('url[original]', with: input)
     click_button("Test it out")
@@ -11,7 +10,7 @@ end
 
 feature "Create regular minlys without vanity string" do
   it "has form for creating minlys" do
-    visit root_path
+    visit "root_path"
     within ".welcome" do
       find("form")
     end
@@ -19,7 +18,7 @@ feature "Create regular minlys without vanity string" do
 
   describe "using the form" do
     it "returns the created minly for valid input" do
-      fill_form
+      fill_minly_form
       visit root_path
       within(".recent") do
         expect(page).to have_content Url.last.shortened
@@ -27,7 +26,7 @@ feature "Create regular minlys without vanity string" do
     end
 
     it "does not create minly for empty input" do
-      fill_form(nil)
+      fill_minly_form(nil)
       visit root_path
       within ".recent" do
         expect(page).not_to have_css ("ul")
@@ -36,10 +35,10 @@ feature "Create regular minlys without vanity string" do
 
     it "does not create multiple minly of same original url for regular users" do
       expect(Url.all.size).to eq 0
-      fill_form ("http://google.com")
+      fill_minly_form ("http://google.com")
       url = Url.last
       expect(Url.all.size).to eq 1
-      fill_form ("http://google.com")
+      fill_minly_form ("http://google.com")
       expect(Url.all.size).not_to eq 2
       visit root_path
       within(".recent") do
@@ -50,7 +49,7 @@ feature "Create regular minlys without vanity string" do
 
   describe "created minly is added to Recent Minlys on reload" do
     it "tags the recent minly as the most recent" do
-      fill_form
+      fill_minly_form
       visit root_path
       within(".recent") do
         expect(find("ul li:first-child")).to have_content Url.last.shortened

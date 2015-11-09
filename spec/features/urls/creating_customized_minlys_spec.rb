@@ -1,6 +1,6 @@
 require "rails_helper"
 
-def user_sign_in
+def user_sign_in_here
   set_valid_omniauth
   visit root_path
   within ".navbar" do
@@ -21,9 +21,8 @@ def fill_form(input = Faker::Internet.url, string = Faker::Lorem.word + rand(1..
 end
 
 feature "Create customized minly" do
-
   it "provides logged in users form field to create customized minlys" do
-    user_sign_in
+    user_sign_in_here
     expect(current_path).to eq dashboard_path
     within ".welcome" do
       find("form")
@@ -32,7 +31,7 @@ feature "Create customized minly" do
 
   describe "customizing minly" do
     before(:each) do
-      user_sign_in
+      user_sign_in_here
     end
 
     it "allows users to create minly that match the provided vanity string" do

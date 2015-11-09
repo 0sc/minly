@@ -1,6 +1,6 @@
 require "rails_helper"
 
-def create_url_and_visit_page(num=5)
+def create_url_and_visit_page_here(num=5)
   num.times { create(:url) }
   visit root_path
 end
@@ -14,7 +14,7 @@ feature "Popular url" do
   describe "arrangement of popular urls" do
     it "displays urls arranged according to the number of views" do
       popular = create(:url, views: 100000)
-      create_url_and_visit_page 10
+      create_url_and_visit_page_here 10
       within ".popular" do
         expect(("ul li").size).to eq 5
         expect(page).to have_content popular.shortened
@@ -24,7 +24,7 @@ feature "Popular url" do
     it "displays only the top 5 urls" do
       last = create(:url, views: 0)
       popular = create(:url, views: 100000)
-      create_url_and_visit_page
+      create_url_and_visit_page_here
       within ".popular" do
         expect(("ul li").size).to eq 5
         expect(page).not_to have_content last.shortened

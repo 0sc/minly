@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: "json"} do
     namespace :v1 do
-      get 'requests/show/:target(/:short_url)', to: "requests#show"
+      get 'requests/show/:target(/:short_url(/:user_token))', to: "requests#show"
     end
   end
   get '/:path', to: "reroute#index"
