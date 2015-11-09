@@ -20,4 +20,4 @@
 /config/application.yml
 
 # Ignore test files
-/coverage/*
+/coverage
