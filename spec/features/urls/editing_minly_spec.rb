@@ -12,7 +12,7 @@ def user_sign_in
   end
 end
 
-def fill_form(input = Faker::Internet.url, string = Faker::Lorem.word + rand(1..10).to_s)
+def fill_edit_form(input = Faker::Internet.url, string = Faker::Lorem.word + rand(1..10).to_s)
   within ".welcome" do
     fill_in('url[original]', with: input)
     fill_in('url[shortened]', with: string)
@@ -25,7 +25,7 @@ feature "Editing minly" do
   describe "If user has created minly" do
     before(:each) do
       user_sign_in
-      fill_form("http://minly.herokuapp.com")
+      fill_edit_form("http://minly.herokuapp.com")
     end
 
     it "provides an edit form for uses to edit minly" do
@@ -56,7 +56,7 @@ feature "Editing minly" do
   describe "editing" do
     before(:each) do
       user_sign_in
-      fill_form("http://minly.herokuapp.com")
+      fill_edit_form("http://minly.herokuapp.com")
     end
 
     it "allows users to change the target of a minly" do

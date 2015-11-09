@@ -1,3 +1,4 @@
+OmniAuth.config.logger = Rails.logger
 Rails.application.config.middleware.use OmniAuth::Builder do
   OmniAuth.config.on_failure = SessionsController.action(:create)
   provider :twitter, ENV["twitter_api_key"], ENV["twitter_api_secret"]

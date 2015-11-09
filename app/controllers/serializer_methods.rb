@@ -7,8 +7,4 @@ module SerializerMethods
       format.js {render :layout => false}
     end
   end
-
-  def add_to_flash_message(hash)
-    hash.each { |key, val| flash[key] = val}
-  end
 end
