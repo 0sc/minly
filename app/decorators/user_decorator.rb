@@ -11,10 +11,7 @@ class UserDecorator < Draper::Decorator
     @my_urls = get_urls
     my_urls.size > 0
   end
-
-  def last_url
-    my_urls.last
-  end
+  
   def first_url
     my_urls.first
   end
