@@ -1,4 +1,7 @@
 <div class="copy">
   <h5 id="new_shortened_url"><%= host_url + @url.shortened %></h5>
   <p>share &emsp; | &emsp;<%= link_to "visit", "/" + @url.shortened, {target: "_blank"} %></p>
+  <% if current_user.urls.size == 1 %>
+    <p><%= link_to "reload to view analytics", dashboard_path, class: "button" %></p>
+  <% end %>
 </div>
