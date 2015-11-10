@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   get '/urls/:id/:user_token', to: "urls#show"
   get "auth/:provider/callback", to: "sessions#create"
   get 'auth/failure', to: redirect("/")
-  get '/users', to: "users#index", as: "dashboard"
+  get "/dashboard", to: "users#index", as: "dashboard"
+  
   get 'signout', to: "sessions#destroy", as: "signout"
 
   namespace :api, defaults: {format: "json"} do

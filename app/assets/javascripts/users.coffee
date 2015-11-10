@@ -7,6 +7,7 @@ $(document).on "page:change", ->
   $(".url-listing").on "click", "div p", ->
     $("p").removeClass("active")
     $(this).addClass("active")
+    $('#edit_form').addClass 'add-ajax-loader'
     link = "/urls/" + ($(this).attr("id").replace("url_", ""))
     $("#trigger a").attr("href", link)
     $("#trigger a").trigger("click")

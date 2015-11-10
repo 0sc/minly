@@ -138,3 +138,9 @@ footer nav ul li a {
   margin-left: 10%;
   margin-bottom: 5%;
 }
+.toggle-display{display: none;}
+.add-ajax-loader{
+  background-image: url("ajax_loader.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+}

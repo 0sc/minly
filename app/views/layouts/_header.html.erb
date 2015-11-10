@@ -15,10 +15,10 @@
     <div class="twelve columns">
       <div class="welcome">
         <h1><%= header_message %></h1>
-        <p><%= header_tagline %></p>
-        <div class="add-top"><%= render 'layouts/form' %></div>
+        <p class="toggle-display"><%= header_tagline %></p>
+        <div class="add-top toggle-display"><%= render 'layouts/form' %></div>
         <div id="form-ajax-loader"><%= image_tag "intersection.gif" %></div>
-        <div id="notification"><%= display_notification flash %></div>
+        <div id="notification" class="toggle-display"><%= display_notification flash %></div>
       </div>
     </div>
   </section>
