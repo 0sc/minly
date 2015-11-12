@@ -37,8 +37,8 @@ Minly prides it's self in being fully tested. Minly is tested using [rspec](http
 
 ## App features
 
-*   Creates _minly's_for users if not custom string is provided
-*   Creates customized _minly's_for users if given a custom string
+*   Creates _minly's_ for users if not custom string is provided
+*   Creates customized _minly's_ for users if given a custom string
 *   Keeps tabs of most recent _minlys_
 *   Keeps tabs of popular _minlys_
 *   Provides visit statistics for registered users
