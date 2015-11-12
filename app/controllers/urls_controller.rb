@@ -44,9 +44,9 @@ class UrlsController < ApplicationController
   def destroy
     if @url
       @url.destroy
-      process_action_callback(:success, @url, "Url was deleted successfully.")
+      process_action_callback(@url,:success, "Url was deleted successfully.")
     else
-      process_action_callback(:error, @url, "Invalid params provided. Request could not be completed.")
+      process_action_callback(@url, :error, "Invalid params provided. Request could not be completed.")
     end
   end
 
